@@ -4,6 +4,7 @@ import { Calendar, Clock, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { FirmanexBanner1, FirmanexBanner5 } from '../components/FirmanexBanners';
 
 const BlogPage = () => {
     return (
@@ -31,6 +32,8 @@ const BlogPage = () => {
                     </p>
                 </div>
             </section>
+
+            <FirmanexBanner1 className="mt-10" />
 
             {/* Blog Grid */}
             <section className="max-w-7xl mx-auto px-6 py-20">
@@ -90,6 +93,7 @@ const BlogPage = () => {
                     ))}
                 </div>
             </section>
+            <FirmanexBanner5 />
             <Footer />
         </div>
     );

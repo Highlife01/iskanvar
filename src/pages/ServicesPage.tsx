@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
+import { FirmanexBanner2, FirmanexBanner4 } from "@/components/FirmanexBanners";
 import { Helmet } from "react-helmet-async";
 import { ShieldCheck, Search, FileText, Building2, MapPin, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -101,6 +102,9 @@ const ServicesPage = () => {
                         </section>
                     </div>
                 </main>
+
+                <FirmanexBanner2 />
+                <FirmanexBanner4 />
 
                 <Footer />
                 <WhatsAppWidget />

@@ -12,6 +12,14 @@ import ContactForm from '@/components/ContactForm';
 import Footer from '@/components/Footer';
 import WhatsAppWidget from '@/components/WhatsAppWidget';
 import SuccessView from '@/components/SuccessView';
+import {
+  FirmanexBanner1,
+  FirmanexBanner2,
+  FirmanexBanner3,
+  FirmanexBanner4,
+  FirmanexBanner5,
+  FirmanexBanner6,
+} from '@/components/FirmanexBanners';
 import { toast } from '@/hooks/use-toast';
 
 interface FormData {
@@ -100,13 +108,19 @@ const Index = () => {
       <div className="min-h-screen bg-background text-foreground font-sans selection:bg-indigo-100 overflow-x-hidden">
         <Navbar />
         <HeroSection />
+        <FirmanexBanner1 />
         <StatsSection />
+        <FirmanexBanner2 />
         <HowItWorksSection />
         <CoverageSection />
+        <FirmanexBanner3 />
         <ServicesSection />
+        <FirmanexBanner4 />
         <PricingSection />
         <TestimonialsSection />
+        <FirmanexBanner5 />
         <ContactForm onSubmit={handleFormSubmit} isSubmitting={isSubmitting} />
+        <FirmanexBanner6 variant="horizontal" />
         <Footer />
         <WhatsAppWidget />
       </div>

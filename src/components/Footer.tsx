@@ -25,6 +25,16 @@ const Footer = () => {
               <li><Link to="/kvkk" className="footer-link hover:text-primary">KVKK Aydınlatma</Link></li>
               <li><Link to="/kullanim-kosullari" className="footer-link hover:text-primary">Kullanım Koşulları</Link></li>
               <li><Link to="/hakkimizda" className="footer-link hover:text-primary">Biz Kimiz?</Link></li>
+              <li>
+                <a
+                  href="https://www.firmanex.com.tr"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-link text-primary hover:text-indigo-700 inline-flex items-center gap-1.5"
+                >
+                  FirmaNex B2B Rehberi ↗
+                </a>
+              </li>
             </ul>
           </div>
 

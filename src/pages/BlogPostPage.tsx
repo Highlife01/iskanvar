@@ -4,6 +4,7 @@ import { blogPosts } from '../data/blog-posts';
 import { Calendar, Clock, ArrowLeft, Share2 } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { FirmanexBanner3, FirmanexBanner6 } from '../components/FirmanexBanners';
 
 const BlogPostPage = () => {
     const { slug } = useParams();
@@ -107,7 +108,9 @@ const BlogPostPage = () => {
             </section>
 
             {/* CTA Section */}
-            <section className="py-20">
+            <FirmanexBanner3 />
+            <FirmanexBanner6 variant="horizontal" />
+            <section className="py-12">
                 <div className="max-w-4xl mx-auto px-6 text-center mb-10">
                     <h2 className="text-3xl font-extrabold text-slate-900">Uzman Desteği Alın</h2>
                     <p className="text-slate-600 mt-4 text-lg">Konu hakkında daha fazla bilgi almak veya işlem başlatmak için formumuzu doldurun.</p>

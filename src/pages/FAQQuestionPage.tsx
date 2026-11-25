@@ -7,6 +7,11 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import CitiesGrid from '@/components/CitiesGrid';
 import WhatsAppWidget from '@/components/WhatsAppWidget';
+import {
+    FirmanexBanner1,
+    FirmanexBanner3,
+    FirmanexBanner6,
+} from '@/components/FirmanexBanners';
 import NotFound from './NotFound';
 import { useState, FormEvent, ChangeEvent } from 'react';
 
@@ -93,6 +98,8 @@ const FAQQuestionPage = () => {
                         </li>
                     </ol>
                 </nav>
+
+                <FirmanexBanner1 />
 
                 {/* Main Content */}
                 <main className="px-6 pb-12">
@@ -246,11 +253,17 @@ const FAQQuestionPage = () => {
                                             Resmi belediye sorgusu değildir. Ön inceleme hizmetidir.
                                         </p>
                                     </div>
+
+                                    <div className="mt-6">
+                                        <FirmanexBanner6 variant="sidebar" />
+                                    </div>
                                 </div>
                             </aside>
                         </div>
                     </div>
                 </main>
+
+                <FirmanexBanner3 />
 
                 {/* Legal Disclaimer */}
                 <section className="px-6 py-12 bg-amber-50/50 border-t border-amber-100">

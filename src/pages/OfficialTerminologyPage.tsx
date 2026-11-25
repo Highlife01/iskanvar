@@ -9,6 +9,10 @@ import CitiesGrid from '@/components/CitiesGrid';
 import WhatsAppWidget from '@/components/WhatsAppWidget';
 import ContactForm from '@/components/ContactForm';
 import SuccessView from '@/components/SuccessView';
+import {
+    FirmanexBanner2,
+    FirmanexBanner4,
+} from '@/components/FirmanexBanners';
 import NotFound from './NotFound';
 
 const OfficialTerminologyPage = () => {
@@ -295,6 +299,9 @@ const OfficialTerminologyPage = () => {
                         </section>
                     </div>
                 </main>
+
+                <FirmanexBanner2 city={cityName} district={districtName} />
+                <FirmanexBanner4 />
 
                 <CitiesGrid />
                 <Footer />

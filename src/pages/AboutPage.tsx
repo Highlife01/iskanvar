@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
+import { FirmanexBanner5, FirmanexBanner6 } from "@/components/FirmanexBanners";
 import { Helmet } from "react-helmet-async";
 import { Info, Target, Users, MapPin, Building2, Phone, Mail } from "lucide-react";
 
@@ -82,6 +83,9 @@ const AboutPage = () => {
                         </section>
                     </div>
                 </main>
+
+                <FirmanexBanner5 />
+                <FirmanexBanner6 variant="horizontal" />
 
                 <Footer />
                 <WhatsAppWidget />

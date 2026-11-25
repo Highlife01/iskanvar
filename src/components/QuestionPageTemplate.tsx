@@ -5,6 +5,12 @@ import FAQSchema from './seo/FAQSchema';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import WhatsAppWidget from './WhatsAppWidget';
+import {
+  FirmanexBanner1,
+  FirmanexBanner2,
+  FirmanexBanner3,
+  FirmanexBanner6,
+} from './FirmanexBanners';
 import { useState, FormEvent, ChangeEvent } from 'react';
 
 interface FAQ {
@@ -100,7 +106,7 @@ const QuestionPageTemplate = ({
         <Navbar />
 
         {/* Breadcrumbs */}
-        <nav className="pt-32 pb-6 px-6 max-w-6xl mx-auto" aria-label="Breadcrumb">
+        <nav className="pt-32 pb-2 px-6 max-w-6xl mx-auto" aria-label="Breadcrumb">
           <ol className="flex items-center gap-2 text-sm text-muted-foreground flex-wrap">
             <li>
               <Link to="/" className="hover:text-primary transition-colors">Ana Sayfa</Link>
@@ -117,6 +123,8 @@ const QuestionPageTemplate = ({
             ))}
           </ol>
         </nav>
+
+        <FirmanexBanner1 />
 
         {/* Hero Section */}
         <header className="px-6 pb-12">
@@ -309,10 +317,16 @@ const QuestionPageTemplate = ({
                     Bu hizmet resmi belediye sorgusu değildir. Girilen bilgilere göre ön inceleme ve araştırma yapılır. Kesin bilgiler ilgili belediyelerden temin edilir.
                   </p>
                 </div>
+
+                <div className="mt-8">
+                  <FirmanexBanner6 variant="sidebar" city={location?.city} />
+                </div>
               </div>
             </div>
           </div>
         </header>
+
+        <FirmanexBanner2 city={location?.city} district={location?.district} />
 
         {/* FAQ Section */}
         <section className="px-6 py-20 bg-slate-50/50">
@@ -355,6 +369,8 @@ const QuestionPageTemplate = ({
             </div>
           </section>
         )}
+
+        <FirmanexBanner3 />
 
         {/* Legal Disclaimer */}
         <section className="px-6 py-12 bg-amber-50/50 border-t border-amber-100">
