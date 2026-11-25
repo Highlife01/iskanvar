@@ -151,51 +151,51 @@ const QuestionPageTemplate = ({
                 </h1>
 
                 <article className="prose prose-lg max-w-none">
-                  <p className="text-lg text-muted-foreground leading-relaxed">
+                  <p className="text-lg text-slate-800 font-medium leading-relaxed">
                     {dynamicContent}
                   </p>
                 </article>
 
                 {/* Key Points */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
-                  <div className="flex items-center gap-3 p-4 bg-card rounded-2xl border border-slate-100">
-                    <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-primary">
+                  <div className="flex items-center gap-3 p-4 bg-white rounded-2xl border-2 border-slate-200 shadow-sm">
+                    <div className="w-10 h-10 bg-indigo-100 rounded-xl flex items-center justify-center text-indigo-700">
                       <Search size={20} />
                     </div>
-                    <span className="text-sm font-bold text-foreground">Hızlı Sorgulama</span>
+                    <span className="text-sm font-extrabold text-slate-900">Hızlı Sorgulama</span>
                   </div>
-                  <div className="flex items-center gap-3 p-4 bg-card rounded-2xl border border-slate-100">
-                    <div className="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600">
+                  <div className="flex items-center gap-3 p-4 bg-white rounded-2xl border-2 border-slate-200 shadow-sm">
+                    <div className="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center text-emerald-700">
                       <FileText size={20} />
                     </div>
-                    <span className="text-sm font-bold text-foreground">Detaylı Rapor</span>
+                    <span className="text-sm font-extrabold text-slate-900">Detaylı Rapor</span>
                   </div>
-                  <div className="flex items-center gap-3 p-4 bg-card rounded-2xl border border-slate-100">
-                    <div className="w-10 h-10 bg-purple-50 rounded-xl flex items-center justify-center text-purple-600">
+                  <div className="flex items-center gap-3 p-4 bg-white rounded-2xl border-2 border-slate-200 shadow-sm">
+                    <div className="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center text-purple-700">
                       <ShieldCheck size={20} />
                     </div>
-                    <span className="text-sm font-bold text-foreground">Güvenilir Sonuç</span>
+                    <span className="text-sm font-extrabold text-slate-900">Güvenilir Sonuç</span>
                   </div>
                 </div>
 
                 {/* City Specific Municipal Contact Block */}
                 {location && (
-                  <div className="mt-12 p-8 bg-indigo-50/50 rounded-4xl border border-indigo-100/50">
-                    <h2 className="text-xl font-extrabold text-foreground mb-4">
+                  <div className="mt-12 p-8 bg-indigo-50 rounded-4xl border-2 border-indigo-200">
+                    <h2 className="text-xl font-extrabold text-slate-900 mb-4">
                       {location.city} Belediyesi Bilgileri
                     </h2>
-                    <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+                    <p className="text-sm text-slate-800 font-medium leading-relaxed mb-6">
                       {location.city} sınırlarındaki yapı kullanma izin belgesi (iskan) işlemleri için {location.city} Belediyesi İmar ve Şehircilik Müdürlüğü ile iletişime geçebilirsiniz.
                       {location.district ? ` ${location.district} ilçesindeki taşınmazlar için ${location.district} Belediyesi yetkilidir.` : ''}
                     </p>
                     <div className="flex flex-wrap gap-4">
-                      <div className="px-4 py-2 bg-white rounded-xl text-xs font-bold text-slate-600 shadow-sm border border-slate-100">
+                      <div className="px-4 py-2 bg-white rounded-xl text-xs font-extrabold text-slate-800 shadow-sm border border-slate-300">
                         📍 İmar Müdürlüğü Ziyareti
                       </div>
-                      <div className="px-4 py-2 bg-white rounded-xl text-xs font-bold text-slate-600 shadow-sm border border-slate-100">
+                      <div className="px-4 py-2 bg-white rounded-xl text-xs font-extrabold text-slate-800 shadow-sm border border-slate-300">
                         📞 Telefon ile Bilgi
                       </div>
-                      <div className="px-4 py-2 bg-white rounded-xl text-xs font-bold text-slate-600 shadow-sm border border-slate-100">
+                      <div className="px-4 py-2 bg-white rounded-xl text-xs font-extrabold text-slate-800 shadow-sm border border-slate-300">
                         🌐 E-Belediye Sorgulama
                       </div>
                     </div>
@@ -203,8 +203,8 @@ const QuestionPageTemplate = ({
                 )}
 
                 {/* Required Documents Block */}
-                <div className="mt-8 p-8 bg-slate-50 rounded-4xl border border-slate-100">
-                  <h2 className="text-xl font-extrabold text-foreground mb-4">İskan İçin Gerekli Belgeler</h2>
+                <div className="mt-8 p-8 bg-white rounded-4xl border-2 border-slate-200 shadow-sm">
+                  <h2 className="text-xl font-extrabold text-slate-900 mb-4">İskan İçin Gerekli Belgeler</h2>
                   <ul className="space-y-3">
                     {[
                       'Yapı Kullanma İzni İstem Dilekçesi',
@@ -214,8 +214,8 @@ const QuestionPageTemplate = ({
                       'Asansörlü binalar için Asansör İşletme Ruhsatı',
                       'SGK Borcu Yoktur Yazısı'
                     ].map((doc, idx) => (
-                      <li key={idx} className="flex items-center gap-3 text-sm text-slate-600 font-medium">
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full shrink-0" />
+                      <li key={idx} className="flex items-center gap-3 text-sm text-slate-800 font-semibold">
+                        <div className="w-2 h-2 bg-primary rounded-full shrink-0" />
                         {doc}
                       </li>
                     ))}
@@ -224,16 +224,16 @@ const QuestionPageTemplate = ({
               </div>
 
               {/* CTA Form Side */}
-              <div className="bg-card rounded-7xl p-8 md:p-10 shadow-card border border-slate-50 sticky top-32">
+              <div className="bg-white rounded-7xl p-8 md:p-10 shadow-card border-2 border-slate-200 sticky top-32">
                 <div className="space-y-6">
                   <div className="text-center space-y-2">
-                    <h2 className="text-2xl font-extrabold text-foreground">Almayı düşündüğünüz dairenin tapusunu yükleyin</h2>
-                    <p className="text-muted-foreground text-sm">İskan durumu sizin adınıza araştırılsın.</p>
+                    <h2 className="text-2xl font-extrabold text-slate-900">Almayı düşündüğünüz dairenin tapusunu yükleyin</h2>
+                    <p className="text-slate-700 font-semibold text-sm">İskan durumu sizin adınıza araştırılsın.</p>
                   </div>
 
                   <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="space-y-2">
-                      <label className="text-[10px] font-extrabold uppercase tracking-widest text-muted-foreground">Ad Soyad</label>
+                      <label className="text-xs font-extrabold uppercase tracking-wider text-slate-800">Ad Soyad</label>
                       <input
                         type="text"
                         name="fullName"
@@ -245,7 +245,7 @@ const QuestionPageTemplate = ({
                     </div>
 
                     <div className="space-y-2">
-                      <label className="text-[10px] font-extrabold uppercase tracking-widest text-muted-foreground">WhatsApp No</label>
+                      <label className="text-xs font-extrabold uppercase tracking-wider text-slate-800">WhatsApp No</label>
                       <input
                         type="tel"
                         name="phone"
@@ -257,7 +257,7 @@ const QuestionPageTemplate = ({
                     </div>
 
                     <div className="space-y-2">
-                      <label className="text-[10px] font-extrabold uppercase tracking-widest text-muted-foreground">Tapu Belgesi</label>
+                      <label className="text-xs font-extrabold uppercase tracking-wider text-slate-800">Tapu Belgesi</label>
                       <div className="relative">
                         <input
                           type="file"
@@ -267,53 +267,53 @@ const QuestionPageTemplate = ({
                         />
                         <div className={`upload-zone py-8 ${file ? 'upload-zone-filled' : 'upload-zone-empty'}`}>
                           {file ? (
-                            <div className="flex items-center justify-center gap-3 text-primary font-bold">
+                            <div className="flex items-center justify-center gap-3 text-indigo-700 font-extrabold">
                               <FileCheck size={24} />
                               <span className="text-xs">{file.name}</span>
                             </div>
                           ) : (
-                            <div className="flex items-center justify-center gap-3 text-muted-foreground">
-                              <Upload size={24} />
-                              <span className="text-sm font-medium">Tapu yükle</span>
+                            <div className="flex items-center justify-center gap-3 text-slate-700">
+                              <Upload size={24} className="text-indigo-700" />
+                              <span className="text-sm font-extrabold">Tapu yükle</span>
                             </div>
                           )}
                         </div>
                       </div>
                     </div>
 
-                    <div className="flex items-start gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                    <div className="flex items-start gap-3 p-4 bg-slate-50 rounded-2xl border-2 border-slate-200">
                       <input
                         type="checkbox"
                         required
                         id="q-consent"
                         name="consent"
-                        className="mt-1 w-5 h-5 rounded border-slate-300 text-primary focus:ring-primary cursor-pointer"
+                        className="mt-1 w-5 h-5 rounded border-slate-400 text-primary focus:ring-primary cursor-pointer"
                       />
-                      <label htmlFor="q-consent" className="text-[10px] text-muted-foreground leading-relaxed font-bold uppercase select-none cursor-pointer">
-                        <span className="text-primary hover:underline italic">KVKK Aydınlatma Metni</span>'ni okudum. Adıma resmi araştırma yapılmasını kabul ediyorum.
+                      <label htmlFor="q-consent" className="text-xs text-slate-800 leading-relaxed font-bold select-none cursor-pointer">
+                        <span className="text-primary underline font-extrabold">KVKK Aydınlatma Metni</span>'ni okudum. Adıma resmi araştırma yapılmasını kabul ediyorum.
                       </label>
                     </div>
 
                     <button
                       type="submit"
-                      className="w-full py-5 bg-primary text-primary-foreground rounded-4xl font-extrabold text-lg flex items-center justify-center gap-3 hover:bg-indigo-700 transition-all shadow-button"
+                      className="w-full py-5 bg-primary text-primary-foreground rounded-4xl font-extrabold text-lg flex items-center justify-center gap-3 hover:bg-indigo-800 transition-all shadow-button"
                     >
                       <span className="flex items-center gap-2">👉 İskan Durumunu Araştır</span> <ArrowRight size={22} />
                     </button>
                   </form>
 
-                  <div className="p-5 bg-slate-50/50 rounded-2xl border border-slate-100 text-[9px] text-slate-500 leading-relaxed">
-                    <h4 className="font-extrabold uppercase mb-1 text-slate-700">Yasal Uyarı</h4>
+                  <div className="p-5 bg-slate-50 rounded-2xl border-2 border-slate-200 text-xs text-slate-700 font-medium leading-relaxed">
+                    <h4 className="font-extrabold uppercase mb-1 text-slate-900">Yasal Uyarı</h4>
                     <p className="mb-2">
                       iskanvar.com.tr özel bir platformdur, kamu kurumu değildir. Sunulan hizmetler takip ve danışmanlık amaçlıdır.
                     </p>
-                    <div className="font-extrabold text-primary flex items-center gap-1.5">
-                      <div className="w-1 h-1 bg-primary rounded-full" />
+                    <div className="font-extrabold text-indigo-700 flex items-center gap-1.5">
+                      <div className="w-1.5 h-1.5 bg-indigo-700 rounded-full" />
                       Yetki Belge No: 0100277
                     </div>
                   </div>
 
-                  <p className="text-[10px] text-muted-foreground/60 italic leading-tight">
+                  <p className="text-xs text-slate-600 font-medium leading-tight">
                     Bu hizmet resmi belediye sorgusu değildir. Girilen bilgilere göre ön inceleme ve araştırma yapılır. Kesin bilgiler ilgili belediyelerden temin edilir.
                   </p>
                 </div>
@@ -329,19 +329,19 @@ const QuestionPageTemplate = ({
         <FirmanexBanner2 city={location?.city} district={location?.district} />
 
         {/* FAQ Section */}
-        <section className="px-6 py-20 bg-slate-50/50">
+        <section className="px-6 py-20 bg-slate-100/80 border-y border-slate-200">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-extrabold text-foreground mb-10 text-center">Sıkça Sorulan Sorular</h2>
+            <h2 className="text-3xl font-extrabold text-slate-900 mb-10 text-center">Sıkça Sorulan Sorular</h2>
 
             <div className="space-y-4">
               {faqs.map((faq, i) => (
-                <details key={i} className="group bg-card rounded-3xl border border-slate-100 overflow-hidden">
+                <details key={i} className="group bg-white rounded-3xl border-2 border-slate-200 overflow-hidden shadow-sm">
                   <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
-                    <h3 className="text-lg font-bold text-foreground pr-4">{faq.question}</h3>
-                    <ChevronRight size={20} className="text-muted-foreground transition-transform group-open:rotate-90 shrink-0" />
+                    <h3 className="text-lg font-extrabold text-slate-900 pr-4">{faq.question}</h3>
+                    <ChevronRight size={20} className="text-slate-600 transition-transform group-open:rotate-90 shrink-0" />
                   </summary>
                   <div className="px-6 pb-6 pt-0">
-                    <p className="text-muted-foreground leading-relaxed">{faq.answer}</p>
+                    <p className="text-slate-700 font-medium leading-relaxed">{faq.answer}</p>
                   </div>
                 </details>
               ))}
@@ -353,16 +353,16 @@ const QuestionPageTemplate = ({
         {relatedLinks.length > 0 && (
           <section className="px-6 py-20">
             <div className="max-w-6xl mx-auto">
-              <h2 className="text-2xl font-extrabold text-foreground mb-8">İlgili Sayfalar</h2>
+              <h2 className="text-2xl font-extrabold text-slate-900 mb-8">İlgili Sayfalar</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {relatedLinks.map((link, i) => (
                   <Link
                     key={i}
                     to={link.href}
-                    className="p-5 bg-card rounded-2xl border border-slate-100 hover:border-primary/30 hover:shadow-lg transition-all group flex items-center justify-between"
+                    className="p-5 bg-white rounded-2xl border-2 border-slate-200 hover:border-indigo-500 hover:shadow-lg transition-all group flex items-center justify-between"
                   >
-                    <span className="font-bold text-foreground group-hover:text-primary transition-colors">{link.label}</span>
-                    <ArrowRight size={18} className="text-muted-foreground group-hover:text-primary transition-colors" />
+                    <span className="font-extrabold text-slate-900 group-hover:text-primary transition-colors">{link.label}</span>
+                    <ArrowRight size={18} className="text-slate-600 group-hover:text-primary transition-colors" />
                   </Link>
                 ))}
               </div>
@@ -373,9 +373,9 @@ const QuestionPageTemplate = ({
         <FirmanexBanner3 />
 
         {/* Legal Disclaimer */}
-        <section className="px-6 py-12 bg-amber-50/50 border-t border-amber-100">
+        <section className="px-6 py-12 bg-amber-50 border-t-2 border-amber-200">
           <div className="max-w-4xl mx-auto text-center">
-            <p className="text-sm text-amber-900/70 font-medium leading-relaxed">
+            <p className="text-sm text-amber-950 font-semibold leading-relaxed">
               <strong>Hukuki Uyarı:</strong> Bu hizmet resmi belediye sorgusu değildir.
               Girilen bilgilere göre ön inceleme ve araştırma yapılır.
               Kesin bilgiler ilgili belediyelerden temin edilir.

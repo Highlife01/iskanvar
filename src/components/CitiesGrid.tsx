@@ -15,24 +15,24 @@ const CitiesGrid = () => {
     }
 
     return (
-        <section className="bg-slate-50/50 py-16 px-6 border-t border-slate-100">
+        <section className="bg-slate-100/80 py-16 px-6 border-t-2 border-slate-200">
             <div className="max-w-7xl mx-auto">
                 {/* Header */}
                 <div className="mb-8">
-                    <h2 className="text-lg font-extrabold uppercase tracking-widest text-slate-700">
+                    <h2 className="text-lg font-extrabold uppercase tracking-widest text-slate-900">
                         Hizmet Verdiğimiz İller
                     </h2>
                 </div>
 
                 {/* Cities Grid */}
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-x-6 gap-y-1">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-x-6 gap-y-1.5">
                     {columns.map((column, colIndex) => (
-                        <div key={colIndex} className="space-y-1">
+                        <div key={colIndex} className="space-y-1.5">
                             {column.map((city) => (
                                 <Link
                                     key={city.slug}
                                     to={`/iskan-sorgulama/${city.slug}`}
-                                    className="block text-sm text-slate-600 hover:text-primary transition-colors py-0.5 font-medium"
+                                    className="block text-sm text-slate-700 hover:text-indigo-700 transition-colors py-0.5 font-bold"
                                 >
                                     {city.name}
                                 </Link>
@@ -42,9 +42,9 @@ const CitiesGrid = () => {
                 </div>
 
                 {/* Footer Note */}
-                <div className="mt-8 pt-6 border-t border-slate-200">
-                    <p className="text-xs text-slate-500 text-center">
-                        Türkiye genelinde <span className="font-bold text-primary">81 il</span> ve tüm ilçelerde iskan sorgulama hizmeti sunuyoruz.
+                <div className="mt-8 pt-6 border-t border-slate-300">
+                    <p className="text-xs text-slate-700 font-semibold text-center">
+                        Türkiye genelinde <span className="font-extrabold text-indigo-700">81 il</span> ve tüm ilçelerde iskan sorgulama hizmeti sunuyoruz.
                     </p>
                 </div>
             </div>

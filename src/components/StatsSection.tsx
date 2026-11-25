@@ -7,32 +7,36 @@ const stats = [
     value: 5000,
     suffix: "+",
     label: "Analiz Edilen Gayrimenkul",
-    color: "from-indigo-500 to-indigo-600",
-    bgColor: "bg-indigo-50",
+    color: "from-indigo-600 to-indigo-800",
+    bgColor: "bg-indigo-100 border border-indigo-200",
+    iconColor: "text-indigo-700",
   },
   {
     icon: Users,
     value: 2500,
     suffix: "+",
     label: "Mutlu Müşteri",
-    color: "from-emerald-500 to-emerald-600",
-    bgColor: "bg-emerald-50",
+    color: "from-emerald-600 to-emerald-800",
+    bgColor: "bg-emerald-100 border border-emerald-200",
+    iconColor: "text-emerald-700",
   },
   {
     icon: Clock,
     value: 48,
     suffix: " Saat",
     label: "Ortalama Teslimat",
-    color: "from-amber-500 to-amber-600",
-    bgColor: "bg-amber-50",
+    color: "from-amber-600 to-amber-800",
+    bgColor: "bg-amber-100 border border-amber-200",
+    iconColor: "text-amber-700",
   },
   {
     icon: Award,
     value: 98,
     suffix: "%",
     label: "Müşteri Memnuniyeti",
-    color: "from-purple-500 to-purple-600",
-    bgColor: "bg-purple-50",
+    color: "from-purple-600 to-purple-800",
+    bgColor: "bg-purple-100 border border-purple-200",
+    iconColor: "text-purple-700",
   },
 ];
 
@@ -107,17 +111,14 @@ const StatsSection = () => {
               return (
                 <div
                   key={stat.label}
-                  className={`relative group p-8 bg-card rounded-[2rem] border border-slate-100 shadow-soft hover:shadow-xl transition-all duration-500 hover:-translate-y-2 ${
+                  className={`relative group p-8 bg-white rounded-[2rem] border-2 border-slate-200/90 shadow-soft hover:shadow-xl transition-all duration-500 hover:-translate-y-2 ${
                     isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                   }`}
                   style={{ transitionDelay: `${index * 100}ms` }}
                 >
                   {/* Icon */}
                   <div className={`w-14 h-14 ${stat.bgColor} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300`}>
-                    <Icon size={28} className={`bg-gradient-to-r ${stat.color} bg-clip-text text-transparent`} style={{ color: 'inherit' }} />
-                    <Icon size={28} className="absolute opacity-100" style={{ 
-                      background: `linear-gradient(135deg, var(--tw-gradient-from), var(--tw-gradient-to))`,
-                    }} />
+                    <Icon size={28} className={stat.iconColor} />
                   </div>
 
                   {/* Value */}
@@ -126,7 +127,7 @@ const StatsSection = () => {
                   </div>
 
                   {/* Label */}
-                  <p className="text-sm font-semibold text-muted-foreground">{stat.label}</p>
+                  <p className="text-sm font-extrabold text-slate-700">{stat.label}</p>
 
                   {/* Decorative gradient line */}
                   <div className={`absolute bottom-0 left-8 right-8 h-1 bg-gradient-to-r ${stat.color} rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
@@ -136,18 +137,18 @@ const StatsSection = () => {
           </div>
 
           {/* Trust Badges */}
-          <div className={`mt-16 flex flex-wrap justify-center items-center gap-8 transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-            <div className="flex items-center gap-3 px-6 py-3 bg-card rounded-full border border-slate-100 shadow-sm">
-              <TrendingUp size={20} className="text-emerald-500" />
-              <span className="text-sm font-bold text-foreground">Türkiye Geneli Hizmet</span>
+          <div className={`mt-16 flex flex-wrap justify-center items-center gap-6 transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+            <div className="flex items-center gap-3 px-6 py-3.5 bg-white rounded-full border-2 border-slate-200 shadow-sm">
+              <TrendingUp size={20} className="text-emerald-600" />
+              <span className="text-sm font-extrabold text-slate-900">Türkiye Geneli Hizmet</span>
             </div>
-            <div className="flex items-center gap-3 px-6 py-3 bg-card rounded-full border border-slate-100 shadow-sm">
-              <Award size={20} className="text-amber-500" />
-              <span className="text-sm font-bold text-foreground">Resmi Arşiv Erişimi</span>
+            <div className="flex items-center gap-3 px-6 py-3.5 bg-white rounded-full border-2 border-slate-200 shadow-sm">
+              <Award size={20} className="text-amber-600" />
+              <span className="text-sm font-extrabold text-slate-900">Resmi Arşiv Erişimi</span>
             </div>
-            <div className="flex items-center gap-3 px-6 py-3 bg-card rounded-full border border-slate-100 shadow-sm">
-              <Users size={20} className="text-indigo-500" />
-              <span className="text-sm font-bold text-foreground">Uzman Kadro</span>
+            <div className="flex items-center gap-3 px-6 py-3.5 bg-white rounded-full border-2 border-slate-200 shadow-sm">
+              <Users size={20} className="text-indigo-600" />
+              <span className="text-sm font-extrabold text-slate-900">Uzman Kadro</span>
             </div>
           </div>
         </div>

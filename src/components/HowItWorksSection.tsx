@@ -84,14 +84,14 @@ const HowItWorksSection = () => {
       <div className="container mx-auto px-6">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-20">
-          <div className={`inline-flex items-center gap-2 px-5 py-2.5 bg-card shadow-xl shadow-slate-100 border border-slate-50 rounded-full text-xs font-extrabold text-primary uppercase tracking-widest mb-6 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-            <Sparkles size={14} className="text-amber-500" />
+          <div className={`inline-flex items-center gap-2 px-5 py-2.5 bg-indigo-50 shadow-sm border border-indigo-200 rounded-full text-xs font-extrabold text-indigo-800 uppercase tracking-widest mb-6 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+            <Sparkles size={14} className="text-amber-600" />
             Süreç Adımları
           </div>
-          <h2 className={`text-4xl md:text-6xl font-extrabold text-foreground tracking-tight mb-6 transition-all duration-700 delay-100 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <h2 className={`text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight mb-6 transition-all duration-700 delay-100 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             <span className="text-gradient-primary">4 Adımda</span> İskan Sorgulama
           </h2>
-          <p className={`text-xl text-muted-foreground font-medium transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <p className={`text-xl text-slate-700 font-semibold transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             Profesyonel ekibimiz ile güvenilir iskan sorgulaması sadece birkaç adım uzağınızda
           </p>
         </div>
@@ -99,9 +99,9 @@ const HowItWorksSection = () => {
         {/* Steps Timeline - Desktop */}
         <div className="hidden lg:block relative max-w-6xl mx-auto">
           {/* Connection Line */}
-          <div className="absolute top-24 left-0 right-0 h-1 bg-gradient-to-r from-indigo-200 via-purple-200 via-emerald-200 to-amber-200 rounded-full" />
+          <div className="absolute top-24 left-0 right-0 h-1.5 bg-slate-200 rounded-full" />
           <div
-            className="absolute top-24 left-0 h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-emerald-500 rounded-full transition-all duration-700 ease-out"
+            className="absolute top-24 left-0 h-1.5 bg-gradient-to-r from-indigo-600 via-purple-600 to-emerald-600 rounded-full transition-all duration-700 ease-out"
             style={{ width: `${((activeStep + 1) / steps.length) * 100}%` }}
           />
 
@@ -126,13 +126,13 @@ const HowItWorksSection = () => {
                           ? `bg-gradient-to-br ${step.color} text-white shadow-lg scale-110`
                           : isPassed
                             ? `bg-gradient-to-br ${step.color} text-white`
-                            : 'bg-card border-2 border-slate-200 text-slate-400'
+                            : 'bg-white border-2 border-slate-300 text-slate-700 shadow-sm'
                         }`}
                     >
                       {isPassed ? (
                         <FileCheck size={24} />
                       ) : (
-                        <span className="text-xl font-bold">{step.id}</span>
+                        <span className="text-xl font-extrabold">{step.id}</span>
                       )}
 
                       {/* Pulse Effect */}
@@ -147,16 +147,16 @@ const HowItWorksSection = () => {
 
                   {/* Content Card */}
                   <div
-                    className={`text-center p-6 rounded-3xl transition-all duration-500 ${isActive
-                        ? `${step.bgColor} shadow-xl scale-105`
-                        : 'bg-transparent hover:bg-slate-50'
+                    className={`text-center p-6 rounded-3xl transition-all duration-500 border-2 ${isActive
+                        ? `${step.bgColor} border-indigo-300 shadow-xl scale-105`
+                        : 'bg-white border-slate-200/90 hover:border-slate-300 shadow-sm'
                       }`}
                   >
-                    <div className={`w-14 h-14 mx-auto mb-4 rounded-2xl ${step.bgColor} flex items-center justify-center transition-transform duration-300 ${isActive ? 'scale-110 rotate-3' : ''}`}>
+                    <div className={`w-14 h-14 mx-auto mb-4 rounded-2xl ${step.bgColor} border border-slate-200/60 flex items-center justify-center transition-transform duration-300 ${isActive ? 'scale-110 rotate-3' : ''}`}>
                       <Icon size={28} className={step.iconColor} />
                     </div>
-                    <h3 className="text-lg font-bold text-foreground mb-2">{step.title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{step.description}</p>
+                    <h3 className="text-lg font-extrabold text-slate-900 mb-2">{step.title}</h3>
+                    <p className="text-sm text-slate-700 font-medium leading-relaxed">{step.description}</p>
                   </div>
                 </div>
               );

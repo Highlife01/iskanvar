@@ -6,82 +6,54 @@
 
 @layer base {
   :root {
-    --background: 230 100% 99%;
-    --foreground: 222 47% 11%;
+    --background: 210 33% 98%;
+    --foreground: 222 47% 9%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card-foreground: 222 47% 9%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover-foreground: 222 47% 9%;
 
-    --primary: 239 84% 67%;
+    --primary: 243 75% 50%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 215 28% 17%;
+    --secondary: 222 47% 11%;
     --secondary-foreground: 210 40% 98%;
 
-    --muted: 220 14% 96%;
-    --muted-foreground: 215 16% 47%;
+    --muted: 214 32% 93%;
+    --muted-foreground: 215 25% 32%;
 
-    --accent: 220 14% 96%;
-    --accent-foreground: 222 47% 11%;
+    --accent: 243 75% 50%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84% 60%;
+    --destructive: 0 84% 55%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 239 84% 67%;
+    --border: 214 28% 84%;
+    --input: 214 28% 82%;
+    --ring: 243 75% 50%;
 
     --radius: 0.5rem;
 
     /* Custom Design Tokens */
     --indigo-50: 226 100% 97%;
-    --indigo-100: 226 100% 94%;
-    --indigo-200: 228 96% 89%;
-    --indigo-400: 234 89% 74%;
-    --indigo-500: 239 84% 67%;
-    --indigo-600: 243 75% 59%;
-    --indigo-700: 245 58% 51%;
-    --indigo-800: 244 55% 41%;
-
-    --emerald-50: 152 81% 96%;
-    --emerald-100: 149 80% 90%;
-    --emerald-400: 158 64% 52%;
-    --emerald-500: 160 84% 39%;
-    --emerald-600: 161 94% 30%;
-
-    --purple-50: 270 100% 98%;
-    --purple-100: 269 100% 95%;
-    --purple-600: 271 91% 65%;
-
-    --amber-50: 48 100% 96%;
-    --amber-100: 48 96% 89%;
-    --amber-700: 32 95% 44%;
-    --amber-900: 22 78% 31%;
-
-    --slate-50: 210 40% 98%;
-    --slate-100: 210 40% 96%;
-    --slate-200: 214 32% 91%;
-    --slate-300: 213 27% 84%;
-    --slate-400: 215 20% 65%;
-    --slate-500: 215 16% 47%;
-    --slate-600: 215 19% 35%;
-    --slate-700: 215 25% 27%;
-    --slate-800: 217 33% 17%;
-    --slate-900: 222 47% 11%;
+    --indigo-100: 226 100% 93%;
+    --indigo-200: 228 96% 86%;
+    --indigo-400: 234 89% 68%;
+    --indigo-500: 239 84% 60%;
+    --indigo-600: 243 75% 52%;
+    --indigo-700: 245 65% 44%;
+    --indigo-800: 244 60% 35%;
 
     /* Shadows */
-    --shadow-soft: 0 40px 100px -20px hsla(222, 47%, 11%, 0.08);
-    --shadow-card: 0 60px 120px -30px hsla(222, 47%, 11%, 0.08);
-    --shadow-button: 0 20px 50px -10px hsla(239, 84%, 67%, 0.3);
-    --shadow-emerald: 0 20px 50px rgba(16, 185, 129, 0.4);
+    --shadow-soft: 0 20px 50px -12px hsla(222, 47%, 11%, 0.12);
+    --shadow-card: 0 25px 60px -15px hsla(222, 47%, 11%, 0.14);
+    --shadow-button: 0 14px 34px -6px hsla(243, 75%, 50%, 0.4);
+    --shadow-emerald: 0 16px 40px rgba(16, 185, 129, 0.45);
 
     /* Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(var(--indigo-600)), hsl(var(--indigo-800)));
-    --gradient-hero-blob: linear-gradient(135deg, hsl(var(--indigo-100) / 0.4), hsl(var(--purple-100) / 0.4));
-    --gradient-dark-overlay: linear-gradient(135deg, hsl(var(--indigo-500) / 0.1), transparent);
   }
 
   .dark {
@@ -94,24 +66,24 @@
     --popover: 222 47% 8%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 239 84% 67%;
+    --primary: 239 84% 64%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 217 33% 17%;
     --secondary-foreground: 210 40% 98%;
 
     --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
+    --muted-foreground: 215 20% 72%;
 
-    --accent: 217 33% 17%;
+    --accent: 239 84% 64%;
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 63% 31%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
-    --ring: 239 84% 67%;
+    --border: 217 33% 22%;
+    --input: 217 33% 22%;
+    --ring: 239 84% 64%;
   }
 }
 
@@ -129,12 +101,12 @@
 @layer components {
   /* Glassmorphism Card */
   .glass-card {
-    @apply bg-card/70 backdrop-blur-2xl border border-card/40 shadow-soft rounded-[2.5rem];
+    @apply bg-white/95 backdrop-blur-xl border border-slate-200/90 shadow-soft rounded-[2.5rem];
   }
 
   /* Soft Card */
   .soft-card {
-    @apply bg-card rounded-[3.5rem] shadow-card border border-slate-50 transition-all duration-300;
+    @apply bg-card rounded-[3.5rem] shadow-card border border-slate-200 transition-all duration-300;
   }
 
   .soft-card:hover {
@@ -143,54 +115,54 @@
 
   /* Hero Button */
   .btn-hero {
-    @apply px-12 py-6 bg-primary text-primary-foreground rounded-[2rem] font-extrabold text-lg 
+    @apply px-10 py-5 bg-primary text-primary-foreground rounded-[2rem] font-extrabold text-lg 
            transition-all shadow-button flex items-center justify-center gap-3;
   }
 
   .btn-hero:hover {
-    @apply bg-indigo-700;
+    @apply bg-indigo-800 scale-[1.02];
   }
 
   /* Secondary Outline Button */
   .btn-outline-hero {
-    @apply flex items-center gap-4 px-8 py-6 rounded-[2rem] bg-card border border-slate-100 
-           text-slate-600 font-bold shadow-sm;
+    @apply flex items-center gap-3 px-8 py-5 rounded-[2rem] bg-white border-2 border-slate-200 
+           text-slate-800 font-extrabold shadow-sm;
   }
 
   /* Form Input */
   .form-input {
-    @apply w-full px-8 py-5 rounded-3xl bg-card border-transparent 
-           focus:ring-4 focus:ring-indigo-100 outline-none transition-all 
-           font-bold text-slate-800 shadow-sm placeholder:text-slate-400;
+    @apply w-full px-6 py-4 rounded-2xl bg-white border-2 border-slate-200 
+           focus:border-indigo-600 focus:ring-4 focus:ring-indigo-100 outline-none transition-all 
+           font-bold text-slate-900 shadow-sm placeholder:text-slate-400;
   }
 
   /* Upload Zone */
   .upload-zone {
-    @apply border-[3px] border-dashed rounded-[2.5rem] p-14 text-center transition-all;
+    @apply border-[3px] border-dashed rounded-[2rem] p-10 text-center transition-all;
   }
 
   .upload-zone-empty {
-    @apply bg-card border-slate-200 hover:border-indigo-400 hover:bg-slate-50;
+    @apply bg-white border-slate-300 hover:border-indigo-600 hover:bg-indigo-50/40;
   }
 
   .upload-zone-filled {
-    @apply bg-indigo-50 border-indigo-200 shadow-inner;
+    @apply bg-indigo-50 border-indigo-400 shadow-inner;
   }
 
   /* Badge */
   .badge-premium {
-    @apply inline-flex items-center gap-2 px-5 py-2.5 bg-card shadow-xl shadow-slate-100 
-           border border-slate-50 rounded-full text-xs font-extrabold text-primary uppercase tracking-widest;
+    @apply inline-flex items-center gap-2 px-5 py-2.5 bg-indigo-50 shadow-sm 
+           border border-indigo-200 rounded-full text-xs font-extrabold text-indigo-800 uppercase tracking-widest;
   }
 
   /* Section Title */
   .section-title {
-    @apply text-4xl md:text-5xl font-extrabold text-foreground tracking-tight;
+    @apply text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight;
   }
 
   /* Section Description */
   .section-desc {
-    @apply text-muted-foreground font-medium text-lg leading-relaxed;
+    @apply text-slate-700 font-semibold text-lg leading-relaxed;
   }
 
   /* Service Card Icon */
@@ -201,7 +173,7 @@
 
   /* Footer Link */
   .footer-link {
-    @apply hover:text-primary cursor-pointer transition-colors;
+    @apply text-slate-700 hover:text-indigo-700 cursor-pointer transition-colors font-bold;
   }
 }
 
@@ -251,7 +223,7 @@
   /* Gradient Text */
   .text-gradient-primary {
     @apply text-transparent bg-clip-text;
-    background-image: linear-gradient(to right, hsl(var(--indigo-600)), hsl(var(--indigo-800)));
+    background-image: linear-gradient(to right, #4338ca, #1e1b4b);
   }
 
   /* Slide In Animations */

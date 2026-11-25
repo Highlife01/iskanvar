@@ -173,13 +173,13 @@ const TestimonialsSection = () => {
     <section className="py-24 bg-gradient-to-b from-background to-muted/30 overflow-hidden">
       <div className="container mx-auto px-6 mb-12">
         <div className="text-center max-w-2xl mx-auto">
-          <span className="inline-block px-4 py-1.5 bg-primary/10 text-primary text-xs font-semibold rounded-full mb-4">
+          <span className="inline-block px-4 py-1.5 bg-indigo-50 border border-indigo-200 text-indigo-800 text-xs font-extrabold rounded-full mb-4">
             Müşteri Yorumları
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">
             Müşterilerimiz Ne Diyor?
           </h2>
-          <p className="text-muted-foreground">
+          <p className="text-slate-700 font-medium">
             Binlerce memnun müşterimizin deneyimlerini keşfedin
           </p>
         </div>
@@ -187,7 +187,7 @@ const TestimonialsSection = () => {
 
       <div
         ref={scrollRef}
-        className="flex gap-6 overflow-hidden cursor-grab active:cursor-grabbing"
+        className="flex gap-6 overflow-hidden cursor-grab active:cursor-grabbing py-4"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
         onTouchStart={() => setIsPaused(true)}
@@ -197,28 +197,28 @@ const TestimonialsSection = () => {
           <div
             key={`${testimonial.id}-${index}`}
             aria-hidden={index >= testimonials.length}
-            className="flex-shrink-0 w-[350px] md:w-[400px] p-6 bg-card/80 backdrop-blur-sm border border-border/50 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+            className="flex-shrink-0 w-[350px] md:w-[400px] p-6 bg-white border-2 border-slate-200 rounded-2xl shadow-soft hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
           >
             <div className="flex items-start gap-4 mb-4">
-              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center text-primary-foreground font-bold text-lg shadow-md">
+              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-600 to-indigo-800 flex items-center justify-center text-white font-extrabold text-lg shadow-md">
                 {testimonial.name.charAt(0)}
               </div>
               <div className="flex-1">
-                <h4 className="font-semibold text-foreground">{testimonial.name}</h4>
-                <p className="text-sm text-muted-foreground">{testimonial.location}</p>
+                <h4 className="font-extrabold text-slate-900">{testimonial.name}</h4>
+                <p className="text-sm text-slate-600 font-semibold">{testimonial.location}</p>
               </div>
-              <Quote size={24} className="text-primary/20" />
+              <Quote size={24} className="text-indigo-200" />
             </div>
 
             <div className="flex gap-0.5 mb-3">
               {renderStars(testimonial.rating)}
             </div>
 
-            <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+            <p className="text-slate-700 font-medium text-sm leading-relaxed mb-4">
               "{testimonial.text}"
             </p>
 
-            <p className="text-xs text-muted-foreground/70">{testimonial.date}</p>
+            <p className="text-xs text-slate-500 font-semibold">{testimonial.date}</p>
           </div>
         ))}
       </div>
@@ -226,18 +226,18 @@ const TestimonialsSection = () => {
       <div className="container mx-auto px-6 mt-12">
         <div className="flex justify-center items-center gap-8 text-center">
           <div>
-            <p className="text-3xl font-bold text-foreground">4.9/5</p>
-            <p className="text-sm text-muted-foreground">Ortalama Puan</p>
+            <p className="text-3xl font-extrabold text-slate-900">4.9/5</p>
+            <p className="text-sm text-slate-700 font-bold">Ortalama Puan</p>
           </div>
-          <div className="w-px h-12 bg-border"></div>
+          <div className="w-px h-12 bg-slate-300"></div>
           <div>
-            <p className="text-3xl font-bold text-foreground">2,500+</p>
-            <p className="text-sm text-muted-foreground">Mutlu Müşteri</p>
+            <p className="text-3xl font-extrabold text-slate-900">2,500+</p>
+            <p className="text-sm text-slate-700 font-bold">Mutlu Müşteri</p>
           </div>
-          <div className="w-px h-12 bg-border"></div>
+          <div className="w-px h-12 bg-slate-300"></div>
           <div>
-            <p className="text-3xl font-bold text-foreground">%98</p>
-            <p className="text-sm text-muted-foreground">Memnuniyet</p>
+            <p className="text-3xl font-extrabold text-slate-900">%98</p>
+            <p className="text-sm text-slate-700 font-bold">Memnuniyet</p>
           </div>
         </div>
       </div>

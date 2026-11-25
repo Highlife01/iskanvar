@@ -17,19 +17,19 @@ const Navbar = () => {
         </Link>
 
         <div className="hidden lg:flex items-center gap-10">
-          <Link to="/hizmetler" className="text-[13px] font-bold text-muted-foreground hover:text-primary transition-colors uppercase tracking-widest">
+          <Link to="/hizmetler" className="text-[13px] font-extrabold text-slate-700 hover:text-primary transition-colors uppercase tracking-widest">
             Hizmetler
           </Link>
-          <Link to="/hakkimizda" className="text-[13px] font-bold text-muted-foreground hover:text-primary transition-colors uppercase tracking-widest">
+          <Link to="/hakkimizda" className="text-[13px] font-extrabold text-slate-700 hover:text-primary transition-colors uppercase tracking-widest">
             Hakkımızda
           </Link>
-          <Link to="/blog" className="text-[13px] font-bold text-muted-foreground hover:text-primary transition-colors uppercase tracking-widest">
+          <Link to="/blog" className="text-[13px] font-extrabold text-slate-700 hover:text-primary transition-colors uppercase tracking-widest">
             Blog
           </Link>
-          <Link to="/ik" className="text-[13px] font-bold text-muted-foreground hover:text-primary transition-colors uppercase tracking-widest">
+          <Link to="/ik" className="text-[13px] font-extrabold text-slate-700 hover:text-primary transition-colors uppercase tracking-widest">
             Kariyer
           </Link>
-          <Link to="/#form" className="bg-secondary text-secondary-foreground px-8 py-3.5 rounded-full text-[13px] font-extrabold uppercase tracking-widest hover:bg-primary hover:text-primary-foreground transition-all shadow-lg shadow-slate-200">
+          <Link to="/#form" className="bg-slate-900 text-white px-8 py-3.5 rounded-full text-[13px] font-extrabold uppercase tracking-widest hover:bg-primary transition-all shadow-lg">
             Başvuru Yap
           </Link>
         </div>
