@@ -5,6 +5,8 @@ import FAQSchema from './seo/FAQSchema';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import WhatsAppWidget from './WhatsAppWidget';
+import SuccessView from './SuccessView';
+import { toast } from '@/hooks/use-toast';
 import {
   FirmanexBanner1,
   FirmanexBanner2,
@@ -50,9 +52,10 @@ const QuestionPageTemplate = ({
 }: QuestionPageProps) => {
   const [file, setFile] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState({ fullName: '', phone: '' });
 
-  const pageUrl = typeof window !== 'undefined' ? window.location.href.replace('http://', 'https://').replace('iskanvar.com.tr', 'www.iskanvar.com.tr') : '';
+  const pageUrl = typeof window !== 'undefined' ? window.location.href.replace('http://', 'https://').replace('://iskanvar.com.tr', '://www.iskanvar.com.tr') : '';
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -65,12 +68,62 @@ const QuestionPageTemplate = ({
     }
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Redirect to main form
-    window.location.href = '/#form';
+
+    try {
+      const payload = new FormData();
+      payload.append('fullName', formData.fullName);
+      payload.append('phone', formData.phone);
+      payload.append('city', location?.city || 'Belirtilmedi');
+      payload.append('district', location?.district || 'Belirtilmedi');
+      payload.append('serviceType', 'iskan');
+      payload.append('pageUrl', pageUrl);
+      payload.append('consent', 'true');
+      if (file) {
+        payload.append('file', file);
+      }
+
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        body: payload,
+      });
+
+      const result = await response.json();
+      if (!response.ok) {
+        throw new Error(result.error || 'Başvuru gönderilemedi.');
+      }
+
+      toast({
+        title: "Başvuru Alındı",
+        description: "Talebiniz uzman ekibimize başarıyla iletildi.",
+      });
+      setIsSubmitted(true);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (error: any) {
+      toast({
+        title: "Hata",
+        description: error.message || "Bir hata oluştu. Lütfen tekrar deneyin.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  if (isSubmitted) {
+    return (
+      <SuccessView
+        phone={formData.phone}
+        onReset={() => {
+          setIsSubmitted(false);
+          setFormData({ fullName: '', phone: '' });
+          setFile(null);
+        }}
+      />
+    );
+  }
 
   // Generate location-specific content
   const locationText = location ?
@@ -100,6 +153,7 @@ const QuestionPageTemplate = ({
         pageUrl={pageUrl}
         articleTitle={h1}
         articleDescription={metaDescription}
+        breadcrumbs={breadcrumbs}
       />
 
       <div className="min-h-screen bg-background text-foreground font-sans">
@@ -233,33 +287,41 @@ const QuestionPageTemplate = ({
 
                   <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="space-y-2">
-                      <label className="text-xs font-extrabold uppercase tracking-wider text-slate-800">Ad Soyad</label>
+                      <label htmlFor="q-fullName" className="text-xs font-extrabold uppercase tracking-wider text-slate-800">Ad Soyad *</label>
                       <input
+                        id="q-fullName"
                         type="text"
                         name="fullName"
                         required
+                        autoComplete="name"
                         placeholder="Adınız Soyadınız"
                         className="form-input text-sm py-4"
+                        value={formData.fullName}
                         onChange={handleInputChange}
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <label className="text-xs font-extrabold uppercase tracking-wider text-slate-800">WhatsApp No</label>
+                      <label htmlFor="q-phone" className="text-xs font-extrabold uppercase tracking-wider text-slate-800">WhatsApp No *</label>
                       <input
+                        id="q-phone"
                         type="tel"
                         name="phone"
                         required
+                        autoComplete="tel"
+                        inputMode="tel"
                         placeholder="05xx xxx xx xx"
                         className="form-input text-sm py-4"
+                        value={formData.phone}
                         onChange={handleInputChange}
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <label className="text-xs font-extrabold uppercase tracking-wider text-slate-800">Tapu Belgesi</label>
+                      <label htmlFor="q-file" className="text-xs font-extrabold uppercase tracking-wider text-slate-800">Tapu Belgesi (PDF veya Fotoğraf)</label>
                       <div className="relative">
                         <input
+                          id="q-file"
                           type="file"
                           onChange={handleFileChange}
                           accept="image/*,application/pdf"
@@ -290,15 +352,19 @@ const QuestionPageTemplate = ({
                         className="mt-1 w-5 h-5 rounded border-slate-400 text-primary focus:ring-primary cursor-pointer"
                       />
                       <label htmlFor="q-consent" className="text-xs text-slate-800 leading-relaxed font-bold select-none cursor-pointer">
-                        <span className="text-primary underline font-extrabold">KVKK Aydınlatma Metni</span>'ni okudum. Adıma resmi araştırma yapılmasını kabul ediyorum.
+                        <Link to="/kvkk" className="text-primary underline font-extrabold">KVKK Aydınlatma Metni</Link>'ni okudum. Adıma resmi araştırma yapılmasını kabul ediyorum.
                       </label>
                     </div>
 
                     <button
                       type="submit"
-                      className="w-full py-5 bg-primary text-primary-foreground rounded-4xl font-extrabold text-lg flex items-center justify-center gap-3 hover:bg-indigo-800 transition-all shadow-button"
+                      disabled={isSubmitting}
+                      className="w-full py-5 bg-primary text-primary-foreground rounded-4xl font-extrabold text-lg flex items-center justify-center gap-3 hover:bg-indigo-800 transition-all shadow-button disabled:opacity-60 disabled:cursor-not-allowed"
                     >
-                      <span className="flex items-center gap-2">👉 İskan Durumunu Araştır</span> <ArrowRight size={22} />
+                      <span className="flex items-center gap-2">
+                        {isSubmitting ? 'Başvurunuz Gönderiliyor...' : '👉 İskan Durumunu Araştır'}
+                      </span>
+                      {!isSubmitting && <ArrowRight size={22} />}
                     </button>
                   </form>
 
@@ -384,7 +450,7 @@ const QuestionPageTemplate = ({
         </section>
 
         <Footer />
-        <WhatsAppWidget />
+        <WhatsAppWidget city={location?.city} district={location?.district} topic={h1} />
       </div>
     </>
   );

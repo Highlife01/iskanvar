@@ -5,10 +5,15 @@ import { generateDistrictContent } from '@/lib/content-generator';
 import NotFound from './NotFound';
 
 const DistrictPage = () => {
-    const { citySlug, districtSlug } = useParams<{ citySlug: string; districtSlug: string }>();
+    const { citySlug, districtSlug, secondSlug } = useParams<{
+        citySlug?: string;
+        districtSlug?: string;
+        secondSlug?: string;
+    }>();
+    const resolvedDistrictSlug = districtSlug || secondSlug || '';
 
     const city = findCityBySlug(citySlug || '');
-    const district = findDistrictBySlug(citySlug || '', districtSlug || '');
+    const district = findDistrictBySlug(citySlug || '', resolvedDistrictSlug);
 
     if (!city || !district) {
         return <NotFound />;
@@ -18,28 +23,41 @@ const DistrictPage = () => {
     const h1 = `${district.name} İskan, Ruhsat ve İmar Sorgulama`;
     const metaDescription = `${city.name} ${district.name} ilçesi için iskan belgesi, yapı ruhsatı ve imar durumu sorgulama hizmetleri. ${district.name} Belediyesi güncel imar kayıtlarına erişim ve danışmanlık.`;
 
-    // Generate generic content for district
+    // Generate rich location-specific content for district
     const generatedContent = generateDistrictContent(city.name, district.name);
 
-    // Generic FAQs for District
+    // Comprehensive FAQs for District
     const districtFaqs = [
         {
-            question: `${district.name} Belediyesi iskan başvurusu nasıl yapılır?`,
-            answer: `${district.name} Belediyesi Yapı Kontrol Müdürlüğü'ne gerekli evraklarla birlikte dilekçe vererek başvuru yapabilirsiniz.`
+            question: `${district.name} Belediyesi iskan başvurusu ve sorgulaması nasıl yapılır?`,
+            answer: `${district.name} Belediyesi İmar ve Şehircilik / Yapı Kontrol Müdürlüğü arşivlerinden ada-parsel veya tapu bilgileriyle sorgulama yapılabilir. Uzman ekibimiz sizin adınıza resmi arşiv dosyasını inceleyerek 24-48 saat içinde rapor sunar.`
         },
         {
-            question: `${district.name} iskan masrafları ne kadar?`,
-            answer: `${district.name} bölgesindeki emlak rayiç bedelleri ve bina sınıfına göre harçlar değişiklik gösterir. Detaylı hesaplama için bizimle iletişime geçebilirsiniz.`
+            question: `${district.name} bölgesinde iskansız (kat irtifaklı) daire almanın riskleri nelerdir?`,
+            answer: `${district.name} sınırlarında iskanı alınmamış binalarda şantiye elektriği/suyu tarifesi, banka konut kredisi engeli, kat mülkiyetine geçememe ve projeye aykırı imalat varsa belediye encümen para cezası veya yıkım kararı riski bulunur.`
+        },
+        {
+            question: `${district.name} iskan masrafları ve harçları ne kadar?`,
+            answer: `${district.name} bölgesindeki emlak rayiç bedelleri, bina inşaat sınıfı ve toplam metrekareye göre belediye harçları değişiklik gösterir. Detaylı arşiv ve harç incelemesi için form üzerinden başvurabilirsiniz.`
+        },
+        {
+            question: `${city.name} ${district.name} imar durumu belgesi nasıl öğrenilir?`,
+            answer: `Parselin TAKS, KAKS (emsal), kat adedi ve çekme mesafeleri ${district.name} Belediyesi güncel uygulama imar planından incelenerek detaylı İmar Durum Raporu halinde tarafınıza sunulur.`
         }
     ];
 
     // Links to Neighborhoods (if available)
     const neighborhoodLinks = (district.neighborhoods || []).map(n => ({
-        label: `${n} Mahallesi İskan`,
-        href: `/${city.slug}/${district.slug}/${n}/iskanli-mi` // Assuming this route exists or we will standardise
+        label: `${n.charAt(0).toUpperCase() + n.slice(1)} Mahallesi İskan`,
+        href: `/${city.slug}/${district.slug}/${n}/iskanli-mi`
     }));
 
-    // Links to General Questions for District
+    // Official terminology link + General Questions for District
+    const officialLink = {
+        label: `${city.name} ${district.name} Yapı Kullanma İzin Belgesi`,
+        href: `/${city.slug}-${district.slug}-yapi-kullanma-izin-belgesi-sorgulama`
+    };
+
     const questionLinks = questionTypes.slice(0, 5).map(q => ({
         label: `${district.name} ${q.title}`,
         href: `/${city.slug}/${district.slug}/${q.slug}`
@@ -53,11 +71,10 @@ const DistrictPage = () => {
             content={generatedContent}
             faqs={districtFaqs}
             breadcrumbs={[
-                { label: "Ana Sayfa", href: "/" },
                 { label: city.name, href: `/${city.slug}` },
                 { label: district.name, href: `/${city.slug}/${district.slug}` }
             ]}
-            relatedLinks={[...neighborhoodLinks, ...questionLinks]}
+            relatedLinks={[officialLink, ...neighborhoodLinks, ...questionLinks]}
             location={{ city: city.name, district: district.name }}
         />
     );

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { CheckCircle2, MessageCircle } from 'lucide-react';
 
 const PHONE_NUMBER = "905320550945";
@@ -8,6 +9,14 @@ interface SuccessViewProps {
 }
 
 const SuccessView = ({ phone, onReset }: SuccessViewProps) => {
+  useEffect(() => {
+    if (typeof window !== 'undefined' && typeof (window as any).gtag === 'function') {
+      (window as any).gtag('event', 'conversion', {
+        send_to: 'AW-1054391872/RsAsCIXjntsbEMD84vYD',
+      });
+    }
+  }, []);
+
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6 font-sans">
       <div className="bg-card p-12 rounded-7xl shadow-soft max-w-lg w-full text-center border border-indigo-50 transform transition-all animate-scale-in">

@@ -1,5 +1,7 @@
-import { useState, FormEvent, ChangeEvent } from 'react';
+import { useState, FormEvent, ChangeEvent, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { ArrowRight, Upload, FileCheck } from 'lucide-react';
+import { allCities } from '@/data/all-locations';
 
 interface FormData {
   fullName: string;
@@ -24,15 +26,35 @@ const ContactForm = ({ onSubmit, isSubmitting, initialCity = '', initialDistrict
     email: '',
     city: initialCity,
     district: initialDistrict,
-    serviceType: 'iskan', // Default
+    serviceType: 'iskan',
   });
   const [file, setFile] = useState<File | null>(null);
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const sortedCities = useMemo(
+    () => [...allCities].sort((a, b) => a.name.localeCompare(b.name, 'tr')),
+    []
+  );
+
+  const availableDistricts = useMemo(() => {
+    const selectedCityObj = sortedCities.find(
+      (c) => c.name.toLowerCase() === formData.city.toLowerCase()
+    );
+    return selectedCityObj ? selectedCityObj.districts : [];
+  }, [formData.city, sortedCities]);
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    if (name === 'city') {
+      setFormData((prev) => ({
+        ...prev,
+        city: value,
+        district: '',
+      }));
+      return;
+    }
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -53,7 +75,7 @@ const ContactForm = ({ onSubmit, isSubmitting, initialCity = '', initialDistrict
 
         <div className="lg:col-span-5 space-y-10">
           <div className="space-y-4">
-            <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">Danışmanlık Formu</h2>
+            <h2 id="contact-form-heading" className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">Danışmanlık Formu</h2>
             <p className="text-slate-700 font-semibold text-lg leading-relaxed">
               Uzmanlarımızın belediye dosyalarını incelemesi için lütfen tapu detaylarını iletin.
             </p>
@@ -66,40 +88,44 @@ const ContactForm = ({ onSubmit, isSubmitting, initialCity = '', initialDistrict
             </div>
             <div className="flex gap-6 items-start">
               <div className="w-14 h-14 bg-indigo-100 border border-indigo-200 rounded-2xl flex items-center justify-center text-indigo-800 font-extrabold text-xl shrink-0">02</div>
-              <p className="text-slate-800 font-bold leading-relaxed pt-2">İl ve ilçe bilgisini doğrulayarak talebi tamamlayın.</p>
+              <p className="text-slate-800 font-bold leading-relaxed pt-2">İl ve ilçe bilgisini seçerek talebi tamamlayın.</p>
             </div>
             <div className="flex gap-6 items-start">
               <div className="w-14 h-14 bg-emerald-100 border border-emerald-200 rounded-2xl flex items-center justify-center text-emerald-800 font-extrabold text-xl shrink-0">03</div>
-              <p className="text-slate-800 font-bold leading-relaxed pt-2">Raporunuz WhatsApp hattınıza gelsin.</p>
+              <p className="text-slate-800 font-bold leading-relaxed pt-2">24-48 saat içinde resmi arşiv raporunuz WhatsApp hattınıza gelsin.</p>
             </div>
           </div>
         </div>
 
         <div className="lg:col-span-7 bg-slate-50 rounded-6xl p-8 md:p-12 border-2 border-slate-200">
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} aria-labelledby="contact-form-heading" className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-xs font-extrabold uppercase tracking-wider text-slate-800 ml-1">Ad Soyad</label>
+                <label htmlFor="cf-fullName" className="text-xs font-extrabold uppercase tracking-wider text-slate-800 ml-1">Ad Soyad *</label>
                 <input
+                  id="cf-fullName"
                   type="text"
                   name="fullName"
                   required
+                  autoComplete="name"
                   placeholder="Adınız Soyadınız"
-                  aria-label="Ad Soyad"
                   className="form-input"
                   onChange={handleInputChange}
                   value={formData.fullName}
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-xs font-extrabold uppercase tracking-wider text-slate-800 ml-1">E-posta</label>
+                <label htmlFor="cf-email" className="text-xs font-extrabold uppercase tracking-wider text-slate-800 ml-1">E-posta *</label>
                 <input
+                  id="cf-email"
                   type="email"
                   name="email"
                   required
-                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                  autoComplete="email"
+                  autoCorrect="off"
+                  autoCapitalize="none"
+                  spellCheck={false}
                   placeholder="ornek@mail.com"
-                  aria-label="E-posta Adresi"
                   className="form-input"
                   onChange={handleInputChange}
                   value={formData.email}
@@ -108,13 +134,15 @@ const ContactForm = ({ onSubmit, isSubmitting, initialCity = '', initialDistrict
             </div>
 
             <div className="space-y-2">
-              <label className="text-xs font-extrabold uppercase tracking-wider text-slate-800 ml-1">WhatsApp No</label>
+              <label htmlFor="cf-phone" className="text-xs font-extrabold uppercase tracking-wider text-slate-800 ml-1">WhatsApp No *</label>
               <input
+                id="cf-phone"
                 type="tel"
                 name="phone"
                 required
+                autoComplete="tel"
+                inputMode="tel"
                 placeholder="05xx xxx xx xx"
-                aria-label="WhatsApp Numarası"
                 className="form-input"
                 onChange={handleInputChange}
                 value={formData.phone}
@@ -123,35 +151,59 @@ const ContactForm = ({ onSubmit, isSubmitting, initialCity = '', initialDistrict
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-xs font-extrabold uppercase tracking-wider text-slate-800 ml-1">Şehir</label>
-                <input
-                  type="text"
+                <label htmlFor="cf-city" className="text-xs font-extrabold uppercase tracking-wider text-slate-800 ml-1">Şehir (81 İl) *</label>
+                <select
+                  id="cf-city"
                   name="city"
                   required
-                  placeholder="Örn: Antalya"
-                  aria-label="Şehir"
-                  className="form-input"
+                  className="form-input bg-white cursor-pointer"
                   onChange={handleInputChange}
                   value={formData.city}
-                />
+                >
+                  <option value="">İl Seçiniz...</option>
+                  {sortedCities.map((c) => (
+                    <option key={c.slug} value={c.name}>
+                      {c.name}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="space-y-2">
-                <label className="text-xs font-extrabold uppercase tracking-wider text-slate-800 ml-1">İlçe</label>
-                <input
-                  type="text"
-                  name="district"
-                  required
-                  placeholder="Örn: Kaş"
-                  aria-label="İlçe"
-                  className="form-input"
-                  onChange={handleInputChange}
-                  value={formData.district}
-                />
+                <label htmlFor="cf-district" className="text-xs font-extrabold uppercase tracking-wider text-slate-800 ml-1">İlçe *</label>
+                {availableDistricts.length > 0 ? (
+                  <select
+                    id="cf-district"
+                    name="district"
+                    required
+                    className="form-input bg-white cursor-pointer"
+                    onChange={handleInputChange}
+                    value={formData.district}
+                  >
+                    <option value="">İlçe Seçiniz...</option>
+                    {availableDistricts.map((d) => (
+                      <option key={d.slug} value={d.name}>
+                        {d.name}
+                      </option>
+                    ))}
+                    <option value="Diğer / Merkez">Diğer / Merkez</option>
+                  </select>
+                ) : (
+                  <input
+                    id="cf-district"
+                    type="text"
+                    name="district"
+                    required
+                    placeholder="Örn: Kadıköy"
+                    className="form-input"
+                    onChange={handleInputChange}
+                    value={formData.district}
+                  />
+                )}
               </div>
             </div>
 
-            <div className="space-y-3 pt-2">
-              <label className="text-xs font-extrabold uppercase tracking-wider text-slate-800 ml-1">Hizmet Türü</label>
+            <fieldset className="space-y-3 pt-2">
+              <legend className="text-xs font-extrabold uppercase tracking-wider text-slate-800 ml-1">Hizmet Türü *</legend>
               <div className="grid grid-cols-1 gap-4">
                 <label className={`relative flex items-center p-4 rounded-2xl border-2 cursor-pointer transition-all bg-white ${formData.serviceType === 'iskan'
                   ? 'border-indigo-600 bg-indigo-50/70 shadow-md'
@@ -164,14 +216,13 @@ const ContactForm = ({ onSubmit, isSubmitting, initialCity = '', initialDistrict
                     checked={formData.serviceType === 'iskan'}
                     onChange={handleInputChange}
                     className="w-5 h-5 text-indigo-600 border-gray-400 focus:ring-indigo-500"
-                    aria-label="Bina İskan Araştırma"
                   />
                   <div className="ml-4 flex-grow">
                     <div className="flex justify-between items-center w-full">
                       <span className="block text-sm font-extrabold text-slate-900">Bina İskan Araştırma</span>
-                      <span className="bg-emerald-100 border border-emerald-300 text-emerald-900 text-xs font-extrabold px-2.5 py-1 rounded-md ml-2">3000 TL</span>
+                      <span className="bg-emerald-100 border border-emerald-300 text-emerald-900 text-xs font-extrabold px-2.5 py-1 rounded-md ml-2">3.000 TL</span>
                     </div>
-                    <span className="block text-xs text-slate-700 font-semibold mt-1">Standart araştırma hizmeti</span>
+                    <span className="block text-xs text-slate-700 font-semibold mt-1">Belediye arşivinden Yapı Kullanma İzin Belgesi ve ceza/yıkım taraması</span>
                   </div>
                 </label>
 
@@ -186,27 +237,47 @@ const ContactForm = ({ onSubmit, isSubmitting, initialCity = '', initialDistrict
                     checked={formData.serviceType === 'imar'}
                     onChange={handleInputChange}
                     className="w-5 h-5 text-indigo-600 border-gray-400 focus:ring-indigo-500"
-                    aria-label="İmar Durum Araştırma"
                   />
                   <div className="ml-4 flex-grow">
                     <div className="flex justify-between items-center w-full">
                       <span className="block text-sm font-extrabold text-slate-900">İmar Durum Araştırma</span>
-                      <span className="bg-emerald-100 border border-emerald-300 text-emerald-900 text-xs font-extrabold px-2.5 py-1 rounded-md ml-2">3000 TL</span>
+                      <span className="bg-emerald-100 border border-emerald-300 text-emerald-900 text-xs font-extrabold px-2.5 py-1 rounded-md ml-2">3.000 TL</span>
                     </div>
-                    <span className="block text-xs text-slate-700 font-semibold mt-1">Detaylı imar durum raporu ve analizi</span>
+                    <span className="block text-xs text-slate-700 font-semibold mt-1">TAKS, KAKS (Emsal), çekme mesafeleri ve güncel imar planı analizi</span>
+                  </div>
+                </label>
+
+                <label className={`relative flex items-center p-4 rounded-2xl border-2 cursor-pointer transition-all bg-white ${formData.serviceType === 'tapu'
+                  ? 'border-indigo-600 bg-indigo-50/70 shadow-md'
+                  : 'border-slate-200 hover:border-slate-400'
+                  }`}>
+                  <input
+                    type="radio"
+                    name="serviceType"
+                    value="tapu"
+                    checked={formData.serviceType === 'tapu'}
+                    onChange={handleInputChange}
+                    className="w-5 h-5 text-indigo-600 border-gray-400 focus:ring-indigo-500"
+                  />
+                  <div className="ml-4 flex-grow">
+                    <div className="flex justify-between items-center w-full">
+                      <span className="block text-sm font-extrabold text-slate-900">Tapu & Mimari Proje Uyumu İnceleme</span>
+                      <span className="bg-emerald-100 border border-emerald-300 text-emerald-900 text-xs font-extrabold px-2.5 py-1 rounded-md ml-2">2.000 TL</span>
+                    </div>
+                    <span className="block text-xs text-slate-700 font-semibold mt-1">Kat irtifakı, bağımsız bölüm, şerh ve mimari proje uygunluk kontrolü</span>
                   </div>
                 </label>
               </div>
-            </div>
+            </fieldset>
 
             <div className="space-y-2">
-              <label className="text-xs font-extrabold uppercase tracking-wider text-slate-800 ml-1">Tapu Belgesi (Gerekli)</label>
+              <label htmlFor="cf-file" className="text-xs font-extrabold uppercase tracking-wider text-slate-800 ml-1">Tapu Belgesi (PDF veya Fotoğraf) *</label>
               <div className="relative group">
                 <input
+                  id="cf-file"
                   type="file"
                   required
                   name="tapu_belgesi"
-                  aria-label="Tapu Belgesi Yükle"
                   onChange={handleFileChange}
                   accept="image/*,application/pdf"
                   className="absolute inset-0 w-full h-full opacity-0 z-10 cursor-pointer"
@@ -235,11 +306,10 @@ const ContactForm = ({ onSubmit, isSubmitting, initialCity = '', initialDistrict
                 required
                 id="consent"
                 name="consent"
-                aria-label="Danışmanlık onayı"
                 className="mt-1 w-5 h-5 rounded border-slate-400 text-primary focus:ring-primary cursor-pointer"
               />
               <label htmlFor="consent" className="text-xs text-slate-800 leading-relaxed font-bold select-none cursor-pointer">
-                <span className="text-primary underline font-extrabold">KVKK Aydınlatma Metni</span>'ni okudum. Adıma resmi araştırma yapılmasını ve verilerimin bu kapsamda işlenmesini kabul ediyorum.
+                <Link to="/kvkk" className="text-primary underline font-extrabold">KVKK Aydınlatma Metni</Link>'ni okudum. Adıma resmi araştırma yapılmasını ve verilerimin bu kapsamda işlenmesini kabul ediyorum.
               </label>
             </div>
 

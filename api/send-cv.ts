@@ -1,8 +1,23 @@
 import { Resend } from 'resend';
 
 export const config = {
-    runtime: 'edge', // Optional: Use edge runtime for faster cold starts
+    runtime: 'edge',
 };
+
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
+
+function escapeHtml(input: string): string {
+    return input
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+function sanitizeFilename(name: string): string {
+    return name.replace(/[^a-zA-Z0-9._-]/g, '_').slice(0, 120) || 'belge';
+}
 
 export default async function handler(request: Request) {
     if (request.method !== 'POST') {
@@ -14,15 +29,23 @@ export default async function handler(request: Request) {
 
     try {
         const formData = await request.formData();
-        const fullName = formData.get('fullName') as string;
+        const rawFullName = (formData.get('fullName') as string) || '';
         const cvFile = formData.get('cv') as File | null;
         const criminalRecordFile = formData.get('criminalRecord') as File | null;
 
+        if (!rawFullName.trim()) {
+            return new Response(JSON.stringify({ error: 'Ad Soyad alanı zorunludur.' }), {
+                status: 400,
+                headers: { 'Content-Type': 'application/json' },
+            });
+        }
+
+        const fullName = escapeHtml(rawFullName.trim().slice(0, 120));
         const resendApiKey = process.env.RESEND_API_KEY;
 
         if (!resendApiKey) {
             console.error('RESEND_API_KEY is missing from environment variables');
-            return new Response(JSON.stringify({ error: 'Resend API Key is missing from env' }), {
+            return new Response(JSON.stringify({ error: 'Sunucu e-posta yapılandırması eksik.' }), {
                 status: 500,
                 headers: { 'Content-Type': 'application/json' },
             });
@@ -32,19 +55,31 @@ export default async function handler(request: Request) {
 
         const attachments = [];
         if (cvFile && cvFile.size > 0) {
+            if (cvFile.size > MAX_FILE_SIZE) {
+                return new Response(JSON.stringify({ error: 'CV dosya boyutu en fazla 10 MB olabilir.' }), {
+                    status: 400,
+                    headers: { 'Content-Type': 'application/json' },
+                });
+            }
             const arrayBuffer = await cvFile.arrayBuffer();
             const buffer = Buffer.from(arrayBuffer);
             attachments.push({
-                filename: `CV-${cvFile.name}`,
+                filename: `CV-${sanitizeFilename(cvFile.name)}`,
                 content: buffer,
             });
         }
 
         if (criminalRecordFile && criminalRecordFile.size > 0) {
+            if (criminalRecordFile.size > MAX_FILE_SIZE) {
+                return new Response(JSON.stringify({ error: 'Adli sicil dosya boyutu en fazla 10 MB olabilir.' }), {
+                    status: 400,
+                    headers: { 'Content-Type': 'application/json' },
+                });
+            }
             const arrayBuffer = await criminalRecordFile.arrayBuffer();
             const buffer = Buffer.from(arrayBuffer);
             attachments.push({
-                filename: `SabikaKaydi-${criminalRecordFile.name}`,
+                filename: `SabikaKaydi-${sanitizeFilename(criminalRecordFile.name)}`,
                 content: buffer,
             });
         }
@@ -56,16 +91,16 @@ export default async function handler(request: Request) {
             html: `
         <h1>Yeni İnsan Kaynakları Başvurusu</h1>
         <p><strong>Ad Soyad:</strong> ${fullName}</p>
-        <p><strong>Başvuru Tarihi:</strong> ${new Date().toLocaleString('tr-TR')}</p>
+        <p><strong>Başvuru Tarihi:</strong> ${escapeHtml(new Date().toLocaleString('tr-TR'))}</p>
         <br/>
         <p>Adayın CV'si ve Sabıka Kaydı ektedir.</p>
       `,
-            attachments: attachments
+            attachments,
         });
 
         if (error) {
-            console.error('Resend error:', error);
-            return new Response(JSON.stringify({ error: error.message }), {
+            console.error('Resend error:', error.message);
+            return new Response(JSON.stringify({ error: 'Başvuru iletilirken bir hata oluştu.' }), {
                 status: 400,
                 headers: { 'Content-Type': 'application/json' },
             });
@@ -73,11 +108,14 @@ export default async function handler(request: Request) {
 
         return new Response(JSON.stringify({ success: true, data }), {
             status: 200,
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Content-Type-Options': 'nosniff',
+            },
         });
 
     } catch (error) {
-        console.error('Handler error:', error);
+        console.error('Handler error');
         return new Response(JSON.stringify({ error: 'Internal Server Error' }), {
             status: 500,
             headers: { 'Content-Type': 'application/json' },

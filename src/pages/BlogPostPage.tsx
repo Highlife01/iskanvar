@@ -1,17 +1,88 @@
+import { useState } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { blogPosts } from '../data/blog-posts';
-import { Calendar, Clock, ArrowLeft, Share2 } from 'lucide-react';
+import { Calendar, Clock, ArrowLeft, Share2, Check } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import WhatsAppWidget from '../components/WhatsAppWidget';
+import ContactForm from '../components/ContactForm';
+import SuccessView from '../components/SuccessView';
+import { toast } from '@/hooks/use-toast';
 import { FirmanexBanner3, FirmanexBanner6 } from '../components/FirmanexBanners';
 
 const BlogPostPage = () => {
     const { slug } = useParams();
     const post = blogPosts.find(p => p.slug === slug);
+    const [copied, setCopied] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [submittedPhone, setSubmittedPhone] = useState('');
 
     if (!post) {
         return <Navigate to="/404" replace />;
+    }
+
+    const handleShare = async () => {
+        const shareUrl = window.location.href;
+        if (navigator.share) {
+            try {
+                await navigator.share({ title: post.title, text: post.summary, url: shareUrl });
+                return;
+            } catch {
+                // Fallback to clipboard
+            }
+        }
+        try {
+            await navigator.clipboard.writeText(shareUrl);
+            setCopied(true);
+            toast({ title: "Bağlantı Kopyalandı", description: "Yazı bağlantısı panoya kopyalandı." });
+            setTimeout(() => setCopied(false), 2500);
+        } catch {
+            // Ignore clipboard errors
+        }
+    };
+
+    const handleFormSubmit = async (data: any, file: File | null) => {
+        setIsSubmitting(true);
+        try {
+            const formData = new FormData();
+            formData.append('fullName', data.fullName);
+            formData.append('phone', data.phone);
+            formData.append('email', data.email);
+            formData.append('city', data.city);
+            formData.append('district', data.district);
+            formData.append('serviceType', data.serviceType || 'iskan');
+            formData.append('pageUrl', window.location.href);
+            formData.append('consent', 'true');
+            if (file) {
+                formData.append('file', file);
+            }
+
+            const response = await fetch('/api/send-email', {
+                method: 'POST',
+                body: formData,
+            });
+            const result = await response.json();
+            if (!response.ok) throw new Error(result.error || 'Başvuru gönderilemedi.');
+
+            toast({ title: "Başvuru Alındı", description: "Talebiniz başarıyla işleme alındı." });
+            setSubmittedPhone(data.phone);
+            setIsSubmitted(true);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } catch (error: any) {
+            toast({
+                title: "Hata",
+                description: error.message || "Bir hata oluştu. Lütfen tekrar deneyin.",
+                variant: "destructive",
+            });
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    if (isSubmitted) {
+        return <SuccessView phone={submittedPhone} onReset={() => setIsSubmitted(false)} />;
     }
 
     // Basic structured data for SEO
@@ -97,10 +168,15 @@ const BlogPostPage = () => {
                                 Paylaş:
                             </div>
                             <div className="flex gap-4">
-                                <button className="p-2 bg-slate-100 rounded-full hover:bg-slate-200 transition-colors text-slate-600">
-                                    <Share2 size={20} />
+                                <button
+                                    type="button"
+                                    onClick={handleShare}
+                                    aria-label="Yazıyı Paylaş"
+                                    className="inline-flex items-center gap-2 px-4 py-2 bg-slate-100 rounded-full hover:bg-slate-200 transition-colors text-slate-700 text-sm font-bold"
+                                >
+                                    {copied ? <Check size={18} className="text-emerald-600" /> : <Share2 size={18} />}
+                                    {copied ? 'Kopyalandı' : 'Bağlantıyı Paylaş'}
                                 </button>
-                                {/* Add real social share buttons if needed */}
                             </div>
                         </div>
                     </div>
@@ -109,16 +185,10 @@ const BlogPostPage = () => {
 
             {/* CTA Section */}
             <FirmanexBanner3 />
+            <ContactForm onSubmit={handleFormSubmit} isSubmitting={isSubmitting} />
             <FirmanexBanner6 variant="horizontal" />
-            <section className="py-12">
-                <div className="max-w-4xl mx-auto px-6 text-center mb-10">
-                    <h2 className="text-3xl font-extrabold text-slate-900">Uzman Desteği Alın</h2>
-                    <p className="text-slate-600 mt-4 text-lg">Konu hakkında daha fazla bilgi almak veya işlem başlatmak için formumuzu doldurun.</p>
-                </div>
-                {/* Pass dummy props if needed, or if ContactForm handles logic itself */}
-                {/* Note: In a real app we might want to lift the state or pass a specialized onSubmit */}
-            </section>
             <Footer />
+            <WhatsAppWidget topic={post.title} />
         </div>
     );
 };

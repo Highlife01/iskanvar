@@ -5,9 +5,10 @@ import { generateDistrictContent } from '@/lib/content-generator';
 import NotFound from './NotFound';
 
 const CityPage = () => {
-    const { citySlug } = useParams<{ citySlug: string }>();
+    const { citySlug, slug } = useParams<{ citySlug?: string; slug?: string }>();
+    const resolvedCitySlug = citySlug || slug || '';
 
-    const city = findCityBySlug(citySlug || '');
+    const city = findCityBySlug(resolvedCitySlug);
 
     if (!city) {
         return <NotFound />;

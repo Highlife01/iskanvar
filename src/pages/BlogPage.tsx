@@ -16,9 +16,9 @@ const BlogPage = () => {
                 <link rel="canonical" href="https://www.iskanvar.com.tr/blog" />
                 <meta property="og:title" content="Blog - İskan ve İmar Rehberi" />
                 <meta property="og:description" content="İskan, imar, tapu ve gayrimenkul hukuku hakkında güncel bilgiler, rehberler ve uzman görüşleri." />
-                <meta property="og:url" content="https://iskanvar.com.tr/blog" />
+                <meta property="og:url" content="https://www.iskanvar.com.tr/blog" />
                 <meta property="og:type" content="website" />
-                <meta property="og:image" content="https://iskanvar.com.tr/og-image.jpg" />
+                <meta property="og:image" content="https://www.iskanvar.com.tr/pwa-512x512.png" />
             </Helmet>
 
             {/* Hero Section */}

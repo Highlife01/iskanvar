@@ -4,9 +4,10 @@ import { findQuestionBySlug, questionTypes, cities, getIskanQuestions, getImarQu
 import NotFound from './NotFound';
 
 const QuestionPage = () => {
-  const { questionSlug } = useParams<{ questionSlug: string }>();
+  const { questionSlug, slug } = useParams<{ questionSlug?: string; slug?: string }>();
+  const resolvedQuestionSlug = questionSlug || slug || '';
 
-  const question = findQuestionBySlug(questionSlug || '');
+  const question = findQuestionBySlug(resolvedQuestionSlug);
 
   if (!question) {
     return <NotFound />;
@@ -14,7 +15,7 @@ const QuestionPage = () => {
 
   // Generate related links based on category
   const sameCategory = questionTypes
-    .filter(q => q.slug !== questionSlug && q.category === question.category)
+    .filter(q => q.slug !== resolvedQuestionSlug && q.category === question.category)
     .slice(0, 4)
     .map(q => ({ label: q.title, href: `/${q.slug}` }));
 
@@ -24,7 +25,7 @@ const QuestionPage = () => {
     .map(q => ({ label: q.title, href: `/${q.slug}` }));
 
   // Add city links
-  const cityLinks = cities.slice(0, 3).map(city => ({
+  const cityLinks = cities.slice(0, 6).map(city => ({
     label: `${city.name} ${question.category === 'imar' ? 'İmar' : 'İskan'} Sorgulama`,
     href: `/${city.slug}/${question.category === 'imar' ? 'imar-durumu-sorgulama' : 'iskan-sorgulama'}`
   }));
@@ -33,11 +34,11 @@ const QuestionPage = () => {
     <QuestionPageTemplate
       title={`${question.title} (Yapı Kullanma İzin Belgesi) | iskanvar`}
       h1={question.h1}
-      metaDescription={`${question.title} hakkında detaylı bilgi, sorgulama adımları ve güncel yasal mevzuat rehberi. Binada iskan var mı nasıl öğrenilir?`}
+      metaDescription={question.description || `${question.title} hakkında detaylı bilgi, sorgulama adımları ve güncel yasal mevzuat rehberi. Binada iskan var mı nasıl öğrenilir?`}
       content={question.content}
       faqs={question.faqs}
       breadcrumbs={[
-        { label: question.title, href: `/${questionSlug}` }
+        { label: question.title, href: `/${resolvedQuestionSlug}` }
       ]}
       relatedLinks={[...sameCategory, ...otherCategory, ...cityLinks]}
     />

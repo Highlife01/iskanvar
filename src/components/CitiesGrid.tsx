@@ -31,7 +31,7 @@ const CitiesGrid = () => {
                             {column.map((city) => (
                                 <Link
                                     key={city.slug}
-                                    to={`/iskan-sorgulama/${city.slug}`}
+                                    to={`/${city.slug}/iskan-sorgulama`}
                                     className="block text-sm text-slate-700 hover:text-indigo-700 transition-colors py-0.5 font-bold"
                                 >
                                     {city.name}

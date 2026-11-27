@@ -50,6 +50,14 @@ export const allCities: City[] = [
         ]
     },
     {
+        "slug": "aksaray",
+        "name": "Aksaray",
+        "districts": [
+            { "slug": "merkez", "name": "Merkez", "neighborhoods": ["itas", "kultur", "cumhuriyet"] },
+            { "slug": "ortakoy", "name": "Ortaköy", "neighborhoods": ["istiklal", "zafer"] }
+        ]
+    },
+    {
         "slug": "amasya",
         "name": "Amasya",
         "districts": [
@@ -94,6 +102,14 @@ export const allCities: City[] = [
         ]
     },
     {
+        "slug": "ardahan",
+        "name": "Ardahan",
+        "districts": [
+            { "slug": "merkez", "name": "Merkez", "neighborhoods": ["karagol", "inonu"] },
+            { "slug": "gole", "name": "Göle", "neighborhoods": ["kubilay", "salimbey"] }
+        ]
+    },
+    {
         "slug": "aydin",
         "name": "Aydın",
         "districts": [
@@ -112,6 +128,29 @@ export const allCities: City[] = [
             { "slug": "edremit", "name": "Edremit", "neighborhoods": ["akcay", "altinoluk", "gure"] },
             { "slug": "bandirma", "name": "Bandırma", "neighborhoods": ["pasabayir", "sunullah"] },
             { "slug": "ayvalik", "name": "Ayvalık", "neighborhoods": ["sarimsakli", "cunda", "altinova"] }
+        ]
+    },
+    {
+        "slug": "bartin",
+        "name": "Bartın",
+        "districts": [
+            { "slug": "merkez", "name": "Merkez", "neighborhoods": ["kemerkopru", "kirktepe"] },
+            { "slug": "amasra", "name": "Amasra", "neighborhoods": ["kum", "kaleici"] }
+        ]
+    },
+    {
+        "slug": "batman",
+        "name": "Batman",
+        "districts": [
+            { "slug": "merkez", "name": "Merkez", "neighborhoods": ["gultepe", "kultur", "tilmerç"] },
+            { "slug": "kozluk", "name": "Kozluk", "neighborhoods": ["tepecik", "yamacli"] }
+        ]
+    },
+    {
+        "slug": "bayburt",
+        "name": "Bayburt",
+        "districts": [
+            { "slug": "merkez", "name": "Merkez", "neighborhoods": ["seyhhayran", "tuzcuzade"] }
         ]
     },
     {

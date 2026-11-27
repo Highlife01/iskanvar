@@ -465,5 +465,42 @@ export const questionTypes: QuestionType[] = [
             { question: "Müteahhit almazsa ne olur?", answer: "Dava açılabilir veya mal sahibi kendi başvurabilir." },
             { question: "Sözleşmede yazılı mı?", answer: "Genellikle inşaat sözleşmesinde belirtilir." }
         ]
+    },
+    {
+        slug: "imar-durumu-sorgulama",
+        title: "İmar Durumu Sorgulama",
+        h1: "İmar Durumu Sorgulama | Arsa ve Bina İmar Planı Analizi",
+        description: "Gayrimenkul ve arsa imar durumu sorgulama hizmeti. TAKS, KAKS, kat adedi, çekme mesafeleri ve güncel belediye imar planı raporu.",
+        content: "İmar durumu sorgulama, bir arsanın veya binanın bulunduğu parseldeki yapılaşma şartlarını (TAKS, KAKS/Emsal, kat yüksekliği, ön/yan bahçe çekme mesafeleri ve kullanım fonksiyonu) resmi belediye imar planlarından öğrenme işlemidir. Yatırım veya satın alma öncesinde olası kamulaştırma, yeşil alan terkleri veya yıkım/kısıtlama risklerini netleştirir.",
+        category: 'imar',
+        faqs: [
+            { question: "İmar durumu belgesi nereden alınır?", answer: "Taşınmazın bağlı bulunduğu ilçe belediyesinin İmar ve Şehircilik Müdürlüğü'nden veya uzman danışmanlık aracılığıyla temin edilir." },
+            { question: "TAKS ve KAKS (Emsal) ne anlama gelir?", answer: "TAKS taban oturum alanını, KAKS (Emsal) ise parsel üzerine yapılabilecek toplam inşaat alanını ifade eder." },
+            { question: "E-imar ile resmi arşiv imar durumu arasındaki fark nedir?", answer: "E-imar ekranları bilgilendirme amaçlıdır ve son meclis kararlarını veya şerhleri içermeyebilir; arşiv incelemesi güncel hukuki durumu gösterir." }
+        ]
+    },
+    {
+        slug: "tapu-inceleme",
+        title: "Tapu İnceleme ve Takyidat Analizi",
+        h1: "Tapu İnceleme | Kat Mülkiyeti, Şerh ve Risk Analizi",
+        description: "Gayrimenkul almadan önce profesyonel tapu inceleme hizmeti. Kat irtifakı, kat mülkiyeti, şerh, beyan ve belediye arşiv uyumu kontrolü.",
+        content: "Tapu inceleme hizmeti; satın almayı planladığınız taşınmazın tapu senedi bilgileri ile belediye arşivindeki mimari proje, yapı ruhsatı ve iskan kayıtlarının birebir örtüşüp örtüşmediğini ortaya koyar. Tapuda görünmeyen belediye yıkım kararları, proje dışı kaçak katlar veya bağımsız bölüm uyumsuzlukları uzmanlarımızca raporlanır.",
+        category: 'iskan',
+        faqs: [
+            { question: "Tapu incelemesinde nelere bakılır?", answer: "Mülkiyet niteliği (kat mülkiyeti/kat irtifakı), bağımsız bölüm numarası, arsa payı, mimari proje uyumu ve belediye arşivindeki şerh/ceza kayıtları incelenir." },
+            { question: "Tapuda sorun yoksa belediyede sorun çıkabilir mi?", answer: "Evet. Belediye encümenince alınmış yıkım veya para cezası kararları her zaman tapu kaydına anında işlenmeyebilir; bu yüzden belediye arşiv taraması şarttır." }
+        ]
+    },
+    {
+        slug: "ada-parsel-ile-iskan",
+        title: "Ada Parsel ile İskan Sorgulama",
+        h1: "Ada Parsel ile İskan Sorgulama | Kadastral Arşiv Kontrolü",
+        description: "Tapudaki ada ve parsel numaraları ile belediye arşivinden resmi iskan ve yapı kullanma izin belgesi sorgulaması yapın.",
+        content: "Ada ve parsel numarası, bir taşınmazın değiştirilemez kadastral kimliğidir. Sokak veya bina kapı numaraları zamanla değişebilse de ada ve parsel bilgileri üzerinden belediye imar arşivinde yapılan sorgulama, binanın ilk ruhsatından güncel iskan durumuna kadar tüm resmi geçmişini kesin olarak ortaya çıkarır.",
+        category: 'iskan',
+        faqs: [
+            { question: "Ada ve parsel numarası tapunun neresinde yazar?", answer: "Tapu senedinin üst bölümünde Mahalle/Köy bilgisinin hemen altında Ada No ve Parsel No olarak yer alır." },
+            { question: "Sadece ada parsel bilgisiyle iskan durumu öğrenilir mi?", answer: "Evet, il, ilçe, mahalle ve ada/parsel bilgileri belediye arşiv taraması için yeterlidir." }
+        ]
     }
 ];

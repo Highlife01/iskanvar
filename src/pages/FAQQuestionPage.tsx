@@ -7,6 +7,8 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import CitiesGrid from '@/components/CitiesGrid';
 import WhatsAppWidget from '@/components/WhatsAppWidget';
+import SuccessView from '@/components/SuccessView';
+import { toast } from '@/hooks/use-toast';
 import {
     FirmanexBanner1,
     FirmanexBanner3,
@@ -18,6 +20,8 @@ import { useState, FormEvent, ChangeEvent } from 'react';
 const FAQQuestionPage = () => {
     const { slug } = useParams<{ slug: string }>();
     const [file, setFile] = useState<File | null>(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isSubmitted, setIsSubmitted] = useState(false);
     const [formData, setFormData] = useState({ fullName: '', phone: '' });
 
     const question = findFAQBySlug(slug || '');
@@ -40,10 +44,59 @@ const FAQQuestionPage = () => {
         }
     };
 
-    const handleSubmit = (e: FormEvent) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        window.location.href = '/#form';
+        setIsSubmitting(true);
+        try {
+            const payload = new FormData();
+            payload.append('fullName', formData.fullName);
+            payload.append('phone', formData.phone);
+            payload.append('city', 'Belirtilmedi');
+            payload.append('district', 'Belirtilmedi');
+            payload.append('serviceType', 'iskan');
+            payload.append('pageUrl', pageUrl);
+            payload.append('consent', 'true');
+            if (file) {
+                payload.append('file', file);
+            }
+
+            const response = await fetch('/api/send-email', {
+                method: 'POST',
+                body: payload,
+            });
+            const result = await response.json();
+            if (!response.ok) {
+                throw new Error(result.error || 'Başvuru gönderilemedi.');
+            }
+            toast({
+                title: "Başvuru Alındı",
+                description: "Talebiniz uzman ekibimize iletildi.",
+            });
+            setIsSubmitted(true);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } catch (error: any) {
+            toast({
+                title: "Hata",
+                description: error.message || "Bir hata oluştu. Lütfen tekrar deneyin.",
+                variant: "destructive",
+            });
+        } finally {
+            setIsSubmitting(false);
+        }
     };
+
+    if (isSubmitted) {
+        return (
+            <SuccessView
+                phone={formData.phone}
+                onReset={() => {
+                    setIsSubmitted(false);
+                    setFormData({ fullName: '', phone: '' });
+                    setFile(null);
+                }}
+            />
+        );
+    }
 
     // Get more questions from same category
     const moreCategoryQuestions = faqQuestions

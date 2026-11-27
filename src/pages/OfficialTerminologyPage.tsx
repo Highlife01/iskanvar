@@ -30,6 +30,8 @@ const OfficialTerminologyPage = () => {
             formData.append('email', data.email);
             formData.append('city', data.city);
             formData.append('district', data.district);
+            formData.append('serviceType', data.serviceType || 'iskan');
+            formData.append('pageUrl', typeof window !== 'undefined' ? window.location.href : '');
             formData.append('consent', 'true');
             if (file) {
                 formData.append('file', file);

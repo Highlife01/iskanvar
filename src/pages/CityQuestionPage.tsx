@@ -5,14 +5,20 @@ import NotFound from './NotFound';
 
 const CityQuestionPage = () => {
   // We might come here from /:citySlug/:questionSlug or from the wrapper with /:citySlug/:secondSlug
-  // The wrapper renders this component directly, but useParams will return the keys from the ROUTE definition.
-  // If rendered via wrapper, route is /:citySlug/:secondSlug.
+  // Also supports legacy reversed /:questionSlug/:citySlug (e.g. /iskan-sorgulama/istanbul)
   const params = useParams();
-  const citySlug = params.citySlug;
-  const questionSlug = params.questionSlug || params.secondSlug; // Handle both cases
+  const rawFirst = params.citySlug || '';
+  const rawSecond = params.questionSlug || params.secondSlug || '';
 
-  const city = findCityBySlug(citySlug || '');
-  const question = findQuestionBySlug(questionSlug || '');
+  let city = findCityBySlug(rawFirst);
+  let question = findQuestionBySlug(rawSecond);
+  let questionSlug = rawSecond;
+
+  if (!city && !question) {
+    city = findCityBySlug(rawSecond);
+    question = findQuestionBySlug(rawFirst);
+    questionSlug = rawFirst;
+  }
 
   if (!city || !question) {
     return <NotFound />;

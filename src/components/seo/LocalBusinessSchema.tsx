@@ -10,19 +10,23 @@ interface LocalBusinessSchemaProps {
 
 const LocalBusinessSchema = ({
     name = "İskanvar Gayrimenkul Danışmanlık",
-    url = "https://iskanvar.com.tr",
-    telephone = "+90-532-000-0000",
+    url = "https://www.iskanvar.com.tr",
+    telephone = "+90-532-055-0945",
     areaServed = "Türkiye",
-    serviceTypes = ["İskan Sorgulama", "İmar Durum Araştırma", "Tapu İşlemleri Takibi"]
+    serviceTypes = ["Bina İskan Araştırma", "İmar Durum Araştırma", "Tapu İnceleme ve Takyidat Analizi"]
 }: LocalBusinessSchemaProps) => {
     const localBusinessSchema = {
         "@context": "https://schema.org",
-        "@type": "LocalBusiness",
+        "@type": "ProfessionalService",
         "name": name,
         "url": url,
         "telephone": telephone,
+        "image": "https://www.iskanvar.com.tr/pwa-512x512.png",
         "address": {
             "@type": "PostalAddress",
+            "streetAddress": "Levent Plaza, No:129",
+            "addressLocality": "Beşiktaş",
+            "addressRegion": "İstanbul",
             "addressCountry": "TR"
         },
         "areaServed": {

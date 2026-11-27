@@ -1,9 +1,25 @@
 import { MapPin, Users, Building2, CheckCircle2 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const cities = [
-  "İstanbul", "Ankara", "İzmir", "Bursa", "Antalya", "Adana",
-  "Konya", "Gaziantep", "Mersin", "Kayseri", "Eskişehir", "Diyarbakır",
-  "Samsun", "Denizli", "Şanlıurfa", "Malatya", "Trabzon", "Erzurum"
+  { name: "İstanbul", slug: "istanbul" },
+  { name: "Ankara", slug: "ankara" },
+  { name: "İzmir", slug: "izmir" },
+  { name: "Bursa", slug: "bursa" },
+  { name: "Antalya", slug: "antalya" },
+  { name: "Adana", slug: "adana" },
+  { name: "Konya", slug: "konya" },
+  { name: "Gaziantep", slug: "gaziantep" },
+  { name: "Mersin", slug: "mersin" },
+  { name: "Kayseri", slug: "kayseri" },
+  { name: "Eskişehir", slug: "eskisehir" },
+  { name: "Diyarbakır", slug: "diyarbakir" },
+  { name: "Samsun", slug: "samsun" },
+  { name: "Denizli", slug: "denizli" },
+  { name: "Şanlıurfa", slug: "sanliurfa" },
+  { name: "Malatya", slug: "malatya" },
+  { name: "Trabzon", slug: "trabzon" },
+  { name: "Erzurum", slug: "erzurum" },
 ];
 
 const CoverageSection = () => {
@@ -66,20 +82,24 @@ const CoverageSection = () => {
           {/* City Tags */}
           <div className="flex flex-wrap gap-3 justify-center">
             {cities.map((city, index) => (
-              <div
-                key={city}
-                className="group relative px-4 py-2 bg-slate-50 border-2 border-slate-200 rounded-full text-sm font-bold text-slate-800 hover:border-indigo-600 hover:bg-indigo-50 hover:text-indigo-800 transition-all duration-300 cursor-default"
+              <Link
+                key={city.slug}
+                to={`/${city.slug}/iskan-sorgulama`}
+                className="group relative px-4 py-2 bg-slate-50 border-2 border-slate-200 rounded-full text-sm font-bold text-slate-800 hover:border-indigo-600 hover:bg-indigo-50 hover:text-indigo-800 transition-all duration-300"
                 style={{ animationDelay: `${index * 50}ms` }}
               >
                 <span className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-pulse" />
-                  {city}
+                  {city.name}
                 </span>
-              </div>
+              </Link>
             ))}
-            <div className="px-4 py-2 bg-indigo-100 border-2 border-indigo-300 rounded-full text-sm font-extrabold text-indigo-800">
+            <a
+              href="#form"
+              className="px-4 py-2 bg-indigo-100 border-2 border-indigo-300 rounded-full text-sm font-extrabold text-indigo-800 hover:bg-indigo-200 transition-colors"
+            >
               +63 İl Daha
-            </div>
+            </a>
           </div>
 
           {/* Bottom Message */}

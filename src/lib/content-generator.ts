@@ -69,26 +69,67 @@ const ctaTemplates = [
 ];
 
 /**
- * Generate unique 250-word content for a district
+ * Generate unique, authoritative localized content for programmatic city and district pages.
+ * Includes regional water/sewerage authority mapping and municipal archive workflows.
  */
+
+const WATER_AUTHORITY_BY_CITY: Record<string, string> = {
+    "İstanbul": "İSKİ",
+    "Ankara": "ASKİ",
+    "İzmir": "İZSU",
+    "Bursa": "BUSKİ",
+    "Antalya": "ASAT",
+    "Adana": "ASKİ",
+    "Konya": "KOSKİ",
+    "Gaziantep": "GASKİ",
+    "Mersin": "MESKİ",
+    "Kocaeli": "İSU",
+    "Kayseri": "KASKİ",
+    "Eskişehir": "ESKİ",
+    "Diyarbakır": "DİSKİ",
+    "Samsun": "SASKİ",
+    "Denizli": "DESKİ",
+    "Şanlıurfa": "ŞUSKİ",
+    "Malatya": "MASKİ",
+    "Trabzon": "TİSKİ",
+    "Erzurum": "ESKİ",
+    "Sakarya": "SASKİ",
+    "Muğla": "MUSKİ",
+    "Tekirdağ": "TESKİ",
+    "Manisa": "MASKİ",
+    "Aydın": "ASKİ",
+    "Balıkesir": "BASKİ",
+    "Hatay": "HATSU",
+    "Kahramanmaraş": "KASKİ",
+    "Van": "VASKİ",
+    "Ordu": "OSKİ",
+    "Mardin": "MARSU",
+};
+
+function getWaterAuthority(city: string): string {
+    return WATER_AUTHORITY_BY_CITY[city] || `${city} Belediyesi Su ve Kanalizasyon Müdürlüğü`;
+}
+
 export function generateDistrictContent(cityName: string, districtName: string): string {
-    // Improve randomness/distribution using a simple hash of the name
+    const isCityWide = !districtName || districtName === 'Genel';
+    const targetRegion = isCityWide ? `${cityName} genelinde` : `${cityName} ${districtName} ilçesinde`;
+    const municipalityName = isCityWide ? `${cityName} ilçe belediyeleri` : `${districtName} Belediyesi`;
+    const waterAuthority = getWaterAuthority(cityName);
+
     let hash = 0;
     const key = cityName + districtName;
     for (let i = 0; i < key.length; i++) {
         hash = (hash << 5) - hash + key.charCodeAt(i);
-        hash |= 0; // Convert to 32bit integer
+        hash |= 0;
     }
     const seed = Math.abs(hash);
 
-    const intro = introTemplates[seed % introTemplates.length](cityName, districtName);
-    const procedure = procedureTemplates[(seed + 1) % procedureTemplates.length](cityName, districtName);
-    const municipality = municipalityTemplates[(seed + 2) % municipalityTemplates.length](cityName, districtName);
-    const faq = faqTemplates[(seed + 3) % faqTemplates.length](cityName, districtName);
+    const intro = introTemplates[seed % introTemplates.length](cityName, isCityWide ? cityName : districtName);
+    const procedure = procedureTemplates[(seed + 1) % procedureTemplates.length](cityName, isCityWide ? cityName : districtName);
+    const municipality = municipalityTemplates[(seed + 2) % municipalityTemplates.length](cityName, isCityWide ? cityName : districtName);
+    const archiveNote = `${targetRegion} gayrimenkul satın almadan veya kira sözleşmesi imzalamadan önce e-Devlet kayıtlarının yanı sıra doğrudan ${municipalityName} İmar ve Şehircilik Müdürlüğü fiziki arşiv dosyasının kontrol edilmesi kritik önem taşır. Kanal bağlantı uygunluk yazısı (${waterAuthority}), yapı denetim iş bitirme tutanağı, SGK ilişiksizlik belgesi ve mimari projeye aykırı tadilat/tutanak olup olmadığı uzman ekibimizce incelenerek 24-48 saat içinde resmi arşiv denetim raporu halinde WhatsApp ve e-posta adresinize iletilir.`;
+    const faq = faqTemplates[(seed + 3) % faqTemplates.length](cityName, isCityWide ? cityName : districtName);
     const cta = ctaTemplates[(seed + 4) % ctaTemplates.length]();
 
-    // Add randomized strong tags or subheaders if needed for better SEO structure in future iteration
-    // For now, paragraph separation is good.
-
-    return `${intro}\n\n${procedure}\n\n${municipality}\n\n${faq}\n\n${cta}`;
+    return `${intro}\n\n${procedure}\n\n${municipality}\n\n${archiveNote}\n\n${faq}\n\n${cta}`;
 }

@@ -2,7 +2,20 @@ import { MessageCircle } from 'lucide-react';
 
 const PHONE_NUMBER = "905320550945";
 
-const WhatsAppWidget = () => {
+interface WhatsAppWidgetProps {
+  city?: string;
+  district?: string;
+  topic?: string;
+}
+
+const WhatsAppWidget = ({ city, district, topic }: WhatsAppWidgetProps = {}) => {
+  const locationPart = [city, district].filter(Boolean).join(' ');
+  const message = locationPart
+    ? `Merhaba, iskanvar.com.tr üzerinden ${locationPart} bölgesi için iskan/imar araştırması hakkında bilgi almak istiyorum.`
+    : topic
+    ? `Merhaba, iskanvar.com.tr üzerinden "${topic}" konusu hakkında bilgi almak istiyorum.`
+    : "Merhaba, iskanvar.com.tr sitesinden ulaşıyorum. İskan ve imar araştırması hakkında bilgi almak istiyorum.";
+
   return (
     <div className="fixed bottom-10 right-10 z-[200] flex flex-col items-end gap-4 group">
       <div className="bg-card px-6 py-4 rounded-6xl shadow-2xl border border-slate-50 transform translate-y-4 opacity-0 scale-90 group-hover:translate-y-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 pointer-events-none mb-2">
@@ -12,14 +25,18 @@ const WhatsAppWidget = () => {
           </div>
           <div>
             <p className="text-[10px] font-extrabold text-muted-foreground uppercase tracking-widest">Çevrimiçi Uzman</p>
-            <p className="text-sm font-bold text-slate-700 italic">Bir sorunuz mu var?</p>
+            <p className="text-sm font-bold text-slate-700 italic">
+              {locationPart ? `${locationPart} Uzman Desteği` : 'Bir sorunuz mu var?'}
+            </p>
           </div>
         </div>
         <div className="absolute bottom-[-6px] right-8 w-4 h-4 bg-card border-r border-b border-slate-50 rotate-45"></div>
       </div>
 
       <a
-        href={`https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent("merhaba iskanvar sitesinden ulaşıyorum")}`}
+        href={`https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(message)}`}
+        target="_blank"
+        rel="noopener noreferrer"
         className="relative flex items-center justify-center"
         aria-label="WhatsApp üzerinden uzmanımızla iletişime geçin"
       >
